@@ -27,40 +27,44 @@
       padding-bottom: 90px;
     }
 
-    /* ФИКСИРОВАННАЯ ШАПКА */
+    /* ДВУХУРОВНЕВАЯ ШАПКА */
     .header-bar {
       position: sticky; top: 0; z-index: 100;
       background: #FFFFFF; border-bottom: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04); padding: 10px 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     .header-content {
-      max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px;
+      max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column;
     }
 
-    .top-brand-row { display: flex; align-items: center; gap: 10px; }
+    /* УРОВЕНЬ 1: Логотип, Мои заказы (с текстом или иконкой), Телефон, Корзина */
+    .header-level-1 {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 10px 16px; border-bottom: 1px solid #F1F3F4;
+    }
     .brand-box {
       display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); cursor: pointer; flex-shrink: 0;
     }
     .brand-logo {
-      width: 42px; height: 42px; border-radius: 10px; object-fit: cover; background: #F1F3F4; border: 1px solid var(--border);
+      width: 40px; height: 40px; border-radius: 10px; object-fit: cover; background: #F1F3F4; border: 1px solid var(--border);
     }
-    .brand-title { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.1; }
+    .brand-title { font-size: 17px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.1; }
     .brand-subtitle { font-size: 11px; color: var(--text-muted); font-weight: 500; }
 
-    .search-input-wrapper { position: relative; flex-grow: 1; }
-    .search-input {
-      width: 100%; padding: 10px 14px 10px 38px; font-size: 14px;
-      border: 1px solid var(--border); border-radius: 24px; outline: none; background: #F1F3F4; transition: all 0.2s;
-    }
-    .search-input:focus { background: #FFF; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(217,48,37,0.15); }
-    .search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 15px; color: var(--text-muted); }
-
     .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .header-cart-btn {
-      background: var(--primary); color: #FFF; border: none; border-radius: 24px;
-      padding: 10px 16px; font-size: 14px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+
+    /* Кнопка "Мои заказы" (адаптивная: текст на ПК, иконка на мобильных) */
+    .track-order-header-btn {
+      background: #F1F3F4; border: 1px solid var(--border); color: var(--text);
+      border-radius: 20px; padding: 8px 14px; font-size: 13px; font-weight: 700;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; transition: background 0.15s;
     }
-    .header-cart-btn:hover { background: var(--primary-dark); }
+    .track-order-header-btn:hover { background: #E8EAED; }
+    .track-text-label { display: inline; }
+    @media (max-width: 640px) {
+      .track-text-label { display: none; }
+      .track-order-header-btn { padding: 8px 10px; border-radius: 50%; width: 40px; height: 40px; justify-content: center; }
+    }
 
     .header-icon-btn {
       width: 40px; height: 40px; border-radius: 50%; background: #F1F3F4;
@@ -69,29 +73,55 @@
     }
     .header-icon-btn:hover { background: #E8EAED; transform: scale(1.05); }
 
-    /* ГОРИЗОНТАЛЬНАЯ ЛЕНТА КАТЕГОРИЙ + КНОПКА ПРЕДЗАКАЗ СХОДУ */
-    .filters-top-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .header-cart-btn {
+      background: var(--primary); color: #FFF; border: none; border-radius: 24px;
+      padding: 9px 16px; font-size: 14px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .header-cart-btn:hover { background: var(--primary-dark); }
+
+    /* УРОВЕНЬ 2: Строка поиска по меню + Кнопка Предзаказ (адаптивная: текст или иконка) */
+    .header-level-2 {
+      display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: #FAFAFB; border-bottom: 1px solid var(--border);
+    }
+    .search-input-wrapper { position: relative; flex-grow: 1; }
+    .search-input {
+      width: 100%; padding: 10px 14px 10px 38px; font-size: 14px;
+      border: 1px solid var(--border); border-radius: 24px; outline: none; background: #FFF; transition: all 0.2s;
+    }
+    .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(217,48,37,0.15); }
+    .search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 15px; color: var(--text-muted); }
+
+    .preorder-level2-btn {
+      background: #E8F0FE; color: #174EA6; border: 1px solid #D2E3FC;
+      border-radius: 22px; padding: 10px 16px; font-size: 14px; font-weight: 700;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; transition: all 0.15s; flex-shrink: 0;
+    }
+    .preorder-level2-btn:hover { background: #D2E3FC; }
+    .preorder-level2-btn.active { background: #1A73E8; color: #FFF; border-color: #1A73E8; }
+    .preorder-text-label { display: inline; }
+    @media (max-width: 640px) {
+      .preorder-text-label { display: none; }
+      .preorder-level2-btn { padding: 10px 12px; border-radius: 50%; width: 40px; height: 40px; justify-content: center; }
+    }
+
+    /* УРОВЕНЬ 3: Категории (лента) */
+    .category-ribbon-wrap { padding: 8px 16px; border-bottom: 1px solid #F1F3F4; background: #FFF; }
     .category-ribbon {
-      display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 4px; scrollbar-width: none; flex-grow: 1;
+      display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
     }
     .category-ribbon::-webkit-scrollbar { display: none; }
     .cat-chip {
-      padding: 8px 14px; border-radius: 20px; background: #F1F3F4; color: var(--text);
+      padding: 7px 14px; border-radius: 20px; background: #F1F3F4; color: var(--text);
       font-size: 13px; font-weight: 600; white-space: nowrap; border: 1px solid transparent; cursor: pointer; user-select: none;
     }
     .cat-chip:hover { background: #E8EAED; }
     .cat-chip.active { background: var(--primary); color: #FFFFFF; box-shadow: 0 2px 6px rgba(217,48,37,0.25); }
 
-    /* Кнопка переключения Предзаказа в строке фильтров */
-    .preorder-toggle-chip {
-      padding: 8px 14px; border-radius: 20px; background: #E8F0FE; color: #174EA6;
-      font-size: 13px; font-weight: 700; white-space: nowrap; border: 1px solid #D2E3FC; cursor: pointer; flex-shrink: 0;
-    }
-    .preorder-toggle-chip.active { background: #1A73E8; color: #FFF; border-color: #1A73E8; }
-
+    /* УРОВЕНЬ 4: Вкус, Острота и Смена вида (Карточки / Сетка) справа */
     .filters-row {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-top: 4px; border-top: 1px solid #F1F3F4;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 16px; background: #FFF;
     }
+    .filters-left { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
     .filter-select {
       padding: 7px 12px; font-size: 13px; border-radius: 8px; border: 1px solid var(--border); outline: none; background: #FFF; cursor: pointer; font-weight: 500; color: var(--text);
     }
@@ -108,7 +138,15 @@
     .taste-option.disabled { opacity: 0.38; cursor: not-allowed; }
     .taste-option input[type="checkbox"] { accent-color: var(--primary); }
 
-    .detail-nav-panel { display: none; align-items: center; gap: 8px; width: 100%; justify-content: space-between; }
+    /* Переключатель вида: Карточки / Сетка */
+    .view-mode-group { display: inline-flex; background: #F1F3F4; padding: 3px; border-radius: 8px; gap: 2px; }
+    .view-mode-btn {
+      background: transparent; border: none; padding: 5px 10px; font-size: 12px; font-weight: 700;
+      border-radius: 6px; cursor: pointer; color: var(--text-muted); transition: all 0.15s;
+    }
+    .view-mode-btn.active { background: #FFF; color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+    .detail-nav-panel { display: none; align-items: center; gap: 8px; width: 100%; justify-content: space-between; padding: 8px 16px; background: #FFF; }
     .btn {
       background: #F1F3F4; border: 1px solid var(--border); padding: 7px 14px; border-radius: 8px;
       cursor: pointer; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
@@ -118,44 +156,68 @@
     .btn-primary { background: var(--primary); color: #FFF; border: none; }
     .btn-primary:hover { background: var(--primary-dark); }
 
-    /* СЕТКА КАТАЛОГА */
+    /* СЕТКА КАТАЛОГА (ДВА РЕЖИМА: КАРТОЧКИ И КОМПАКТНАЯ СЕТКА) */
     .catalog-view {
-      max-width: 1200px; margin: 18px auto; padding: 0 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;
+      max-width: 1200px; margin: 18px auto; padding: 0 16px; display: grid; gap: 16px;
     }
+    /* Режим 1: Крупные карточки */
+    .catalog-view.mode-cards {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    /* Режим 2: Компактная плотная сетка */
+    .catalog-view.mode-grid {
+      grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+      gap: 10px;
+    }
+
     @media (max-width: 520px) {
-      .catalog-view { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 10px; }
+      .catalog-view.mode-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 10px; }
+      .catalog-view.mode-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 0 6px; }
       .brand-subtitle { display: none; }
-      .brand-title { font-size: 16px; }
+      .brand-title { font-size: 15px; }
     }
+
     .card {
       background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow);
       overflow: hidden; cursor: pointer; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);
     }
     .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
-    .card-photo-wrapper { position: relative; width: 100%; height: 175px; background: #F1F3F4; overflow: hidden; }
+
+    /* Фото в режиме сетки делаем компактнее */
+    .catalog-view.mode-grid .card-photo-wrapper { height: 110px; }
+    .catalog-view.mode-cards .card-photo-wrapper { height: 175px; }
+    .card-photo-wrapper { position: relative; width: 100%; background: #F1F3F4; overflow: hidden; }
     .card-photo { width: 100%; height: 100%; object-fit: cover; }
-    .badge { position: absolute; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; color: #FFF; backdrop-filter: blur(4px); }
-    .badge-spicy { bottom: 8px; left: 8px; background: rgba(217, 48, 37, 0.9); }
-    .badge-taste { top: 8px; left: 8px; background: rgba(32, 33, 36, 0.75); }
-    .badge-preorder { top: 8px; right: 8px; background: rgba(26, 115, 232, 0.9); font-size: 10px; }
-    .card-body { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; }
-    .card-category { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text-muted); margin-bottom: 4px; }
+
+    .badge { position: absolute; padding: 3px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; color: #FFF; backdrop-filter: blur(4px); }
+    .badge-spicy { bottom: 6px; left: 6px; background: rgba(217, 48, 37, 0.9); }
+    .badge-taste { top: 6px; left: 6px; background: rgba(32, 33, 36, 0.75); }
+    .badge-preorder { top: 6px; right: 6px; background: rgba(26, 115, 232, 0.9); font-size: 9px; }
+
+    .card-body { padding: 10px 12px 12px; display: flex; flex-direction: column; flex-grow: 1; }
+    .catalog-view.mode-grid .card-body { padding: 8px; }
+
+    .card-category { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text-muted); margin-bottom: 2px; }
     .card-title {
-      font-size: 14px; font-weight: 600; line-height: 1.35; margin-bottom: 10px; flex-grow: 1;
+      font-size: 13px; font-weight: 600; line-height: 1.3; margin-bottom: 8px; flex-grow: 1;
       display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
-    .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: auto; }
-    .card-price { font-size: 16px; font-weight: 800; color: var(--text); }
-    .card-weight { font-size: 11px; color: var(--text-muted); }
+    .catalog-view.mode-grid .card-title { font-size: 11px; -webkit-line-clamp: 3; margin-bottom: 6px; }
+
+    .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-top: auto; }
+    .card-price { font-size: 15px; font-weight: 800; color: var(--text); }
+    .catalog-view.mode-grid .card-price { font-size: 13px; }
+    .card-weight { font-size: 10px; color: var(--text-muted); }
     .card-add-btn {
-      background: #FCE8E6; color: var(--primary); border: none; border-radius: 8px;
-      padding: 6px 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.15s;
+      background: #FCE8E6; color: var(--primary); border: none; border-radius: 6px;
+      padding: 5px 10px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s;
     }
     .card-add-btn:hover { background: var(--primary); color: #FFF; }
     .card-add-btn.preorder-btn { background: #E8F0FE; color: #174EA6; }
     .card-add-btn.preorder-btn:hover { background: #1A73E8; color: #FFF; }
+    .catalog-view.mode-grid .card-add-btn { padding: 4px 8px; font-size: 11px; }
 
-    /* ЭКРАН ТОВАРА (АДАПТИВ ПОД ПК И МОБИЛЬНЫЕ) */
+    /* ЭКРАН ТОВАРА */
     .detail-view { display: none; max-width: 820px; margin: 16px auto 60px; padding: 0 14px; }
     .detail-card {
       background: #FFFFFF; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--border); padding: 22px; display: flex; flex-direction: column; gap: 18px;
@@ -183,9 +245,7 @@
 
     .modifiers-box { background: #FAFBFD; border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 16px; }
     .format-toggle-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #E8EAED; padding: 4px; border-radius: 10px; }
-    .format-option {
-      padding: 10px 12px; text-align: center; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; color: var(--text-muted);
-    }
+    .format-option { padding: 10px 12px; text-align: center; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; color: var(--text-muted); }
     .format-option.active { background: #FFFFFF; color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.12); }
     .format-price-tag { display: block; font-size: 11px; font-weight: 600; color: var(--primary); margin-top: 2px; }
 
@@ -237,7 +297,7 @@
     .modal-title { font-size: 20px; font-weight: 800; }
     .modal-close { background: #F1F3F4; border: none; width: 34px; height: 34px; border-radius: 50%; font-size: 18px; cursor: pointer; }
 
-    /* ДВОЙНАЯ КОРЗИНА (ЧЕКБОКСЫ И СЕКЦИИ) */
+    /* ДВОЙНАЯ КОРЗИНА */
     .cart-section-box { border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 12px; background: #FAFBFD; }
     .cart-section-box.disabled-section { opacity: 0.5; background: #F1F3F4; }
     .cart-section-header { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 800; margin-bottom: 8px; cursor: pointer; }
@@ -248,7 +308,7 @@
     .cart-qty-box { display: inline-flex; align-items: center; gap: 8px; background: #F1F3F4; border-radius: 8px; padding: 4px 8px; flex-shrink: 0; }
     .qty-btn { border: none; background: none; font-size: 16px; font-weight: 800; cursor: pointer; padding: 0 4px; color: var(--text); }
 
-    /* ПОСТ-ПРОДАЖНАЯ ЛЕНТА (UPSELL) */
+    /* UPSELL */
     .upsell-section { margin: 18px 0; background: #FFF8F6; border: 1px solid #FAD2CF; border-radius: 12px; padding: 12px; }
     .upsell-ribbon { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
     .upsell-ribbon::-webkit-scrollbar { display: none; }
@@ -265,35 +325,25 @@
     .form-input:focus { border-color: var(--primary); }
     .delivery-note { font-size: 12px; color: #5F6368; background: #F8F9FA; border-left: 3px solid var(--primary); padding: 10px 12px; border-radius: 6px; margin: 12px 0; line-height: 1.45; }
 
-    /* ЭКРАН ПОСЛЕ ЗАКАЗА С АВТО-ПРИВЯЗКОЙ ТГ И КОПИРОВАНИЕМ */
     .success-screen { text-align: center; padding: 10px 4px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
     .success-icon { width: 64px; height: 64px; border-radius: 50%; background: #E6F4EA; color: #137333; display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: bold; }
     .feedback-phone-box { width: 100%; padding: 10px 14px; background: #F8F9FA; border: 1px solid var(--border); border-radius: 10px; font-size: 13px; color: var(--text-muted); }
     .feedback-phone-box a { color: var(--text); font-weight: 800; text-decoration: none; }
 
-    .copy-box {
-      background: #F1F3F4; border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 14px; font-weight: bold; width: 100%;
-    }
+    .copy-box { background: #F1F3F4; border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 14px; font-weight: bold; width: 100%; }
     .copy-btn { background: #202124; color: #FFF; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; }
     .copy-btn:hover { background: #3C4043; }
 
-    .tg-auto-link-box {
-      background: #E8F0FE; border: 1px solid #D2E3FC; border-radius: 12px; padding: 14px; text-align: left; width: 100%; font-size: 13px; line-height: 1.45; color: #1557B0;
-    }
-    .tg-bot-btn {
-      display: inline-block; margin-top: 8px; padding: 8px 16px; background: #1A73E8; color: #FFF; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 13px;
-    }
+    .tg-auto-link-box { background: #E8F0FE; border: 1px solid #D2E3FC; border-radius: 12px; padding: 14px; text-align: left; width: 100%; font-size: 13px; line-height: 1.45; color: #1557B0; }
+    .tg-bot-btn { display: inline-block; margin-top: 8px; padding: 8px 16px; background: #1A73E8; color: #FFF; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 13px; }
 
     .pay-btn-sbp { width: 100%; padding: 15px; border-radius: 12px; border: none; background: #137333; color: #FFFFFF; font-size: 16px; font-weight: 800; cursor: pointer; }
     .pay-btn-card { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid var(--accent-blue); background: #E8F0FE; color: #174EA6; font-size: 15px; font-weight: 800; cursor: pointer; }
     .pay-btn-tips { display: inline-block; padding: 9px 18px; border-radius: 20px; background: #F1F3F4; color: var(--text); text-decoration: none; font-size: 13px; font-weight: 600; margin-top: 4px; }
     .qr-link-box { display: inline-block; padding: 14px; border: 2px dashed var(--border); border-radius: 16px; background: #FFF; text-decoration: none; color: inherit; }
     .qr-img { width: 220px; height: 220px; object-fit: contain; display: block; margin: 0 auto; }
-
-    /* ЗАГРУЗКА ЧЕКА В ПОП-АПЕ ОПЛАТЫ */
     .receipt-upload-box { background: #F8F9FA; border: 1px dashed var(--border); border-radius: 12px; padding: 14px; text-align: center; margin-top: 14px; }
 
-    /* ОКНО ОТСЛЕЖИВАНИЯ "МОИ ЗАКАЗЫ" */
     .track-order-card { background: #FFF; border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
     .track-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .track-actions-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
@@ -306,10 +356,12 @@
 </head>
 <body>
 
-  <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+  <!-- ДВУХУРОВНЕВАЯ ШАПКА -->
   <header class="header-bar">
     <div class="header-content">
-      <div class="top-brand-row">
+      
+      <!-- УРОВЕНЬ 1: Логотип, Мои заказы, Телефон, Корзина -->
+      <div class="header-level-1">
         <div class="brand-box" onclick="switchToNormalCatalog()">
           <img id="brandLogo" class="brand-logo" src="" alt="СамаРамён">
           <div>
@@ -318,14 +370,11 @@
           </div>
         </div>
 
-        <div class="search-input-wrapper">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="searchInput" class="search-input" placeholder="Поиск по названию, вкусу или описанию..." autocomplete="off">
-        </div>
-
         <div class="header-actions">
-          <!-- Кнопка поиска / отслеживания заказов -->
-          <button class="header-icon-btn" onclick="openTrackModal()" title="Мои заказы и отслеживание">📦</button>
+          <!-- Кнопка Мои заказы (Адаптивная: текст на широких, иконка на узких) -->
+          <button class="track-order-header-btn" onclick="openTrackModal()" title="Мои заказы и отслеживание">
+            <span>📦</span> <span class="track-text-label">Мои заказы</span>
+          </button>
           <!-- Иконка телефона -->
           <a id="headerPhoneBtn" href="tel:" class="header-icon-btn" title="Связаться с нами">📞</a>
           <!-- Корзина -->
@@ -336,29 +385,45 @@
         </div>
       </div>
 
-      <!-- Лента категорий + Кнопка Предзаказ -->
-      <div class="filters-top-row">
-        <div class="category-ribbon" id="categoryRibbon"></div>
-        <button class="preorder-toggle-chip" id="preorderToggleBtn" onclick="togglePreorderMode()">
-          📦 Предзаказ
+      <!-- УРОВЕНЬ 2: Поиск по меню + Предзаказ (Адаптивный: текст на широких, иконка на узких) -->
+      <div class="header-level-2">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" class="search-input" placeholder="Поиск по названию, вкусу или описанию..." autocomplete="off">
+        </div>
+        <button class="preorder-level2-btn" id="preorderToggleBtn" onclick="togglePreorderMode()" title="Режим предзаказа">
+          <span>📦</span> <span class="preorder-text-label">Предзаказ</span>
         </button>
       </div>
 
-      <!-- Фильтры вкуса и остроты -->
+      <!-- УРОВЕНЬ 3: Горизонтальная лента категорий -->
+      <div class="category-ribbon-wrap">
+        <div class="category-ribbon" id="categoryRibbon"></div>
+      </div>
+
+      <!-- УРОВЕНЬ 4: Вкус, Острота и Смена вида (Карточки / Сетка) в правой части -->
       <div class="filters-row" id="filtersRow">
-        <div class="taste-dropdown-wrapper" id="tasteDropdownWrapper">
-          <button type="button" class="filter-select taste-btn" id="tasteBtn">
-            <span id="tasteBtnText">Вкус: Все</span>
-            <span style="font-size: 10px; color: var(--text-muted);">▼</span>
-          </button>
-          <div class="taste-menu" id="tasteMenu"></div>
+        <div class="filters-left">
+          <div class="taste-dropdown-wrapper" id="tasteDropdownWrapper">
+            <button type="button" class="filter-select taste-btn" id="tasteBtn">
+              <span id="tasteBtnText">Вкус: Все</span>
+              <span style="font-size: 10px; color: var(--text-muted);">▼</span>
+            </button>
+            <div class="taste-menu" id="tasteMenu"></div>
+          </div>
+
+          <select id="sortSpiciness" class="filter-select">
+            <option value="none">Острота: по умолчанию</option>
+            <option value="desc">Сначала самые острые 🌶️</option>
+            <option value="asc">Сначала мягкие / неострые</option>
+          </select>
         </div>
 
-        <select id="sortSpiciness" class="filter-select">
-          <option value="none">Острота: по умолчанию</option>
-          <option value="desc">Сначала самые острые 🌶️</option>
-          <option value="asc">Сначала мягкие / неострые</option>
-        </select>
+        <!-- Переключатель вида справа -->
+        <div class="view-mode-group">
+          <button type="button" class="view-mode-btn active" id="viewModeCards" onclick="setViewMode('cards')" title="Крупные карточки">Карточки</button>
+          <button type="button" class="view-mode-btn" id="viewModeGrid" onclick="setViewMode('grid')" title="Компактная сетка">Сетка</button>
+        </div>
       </div>
 
       <!-- Панель возврата из открытой карточки -->
@@ -370,11 +435,12 @@
           <button class="btn" id="nextBtn">→</button>
         </div>
       </div>
+
     </div>
   </header>
 
-  <!-- СЕТКА КАТАЛОГА -->
-  <main class="catalog-view" id="catalogView">
+  <!-- СЕТКА КАТАЛОГА (по умолчанию режим mode-cards) -->
+  <main class="catalog-view mode-cards" id="catalogView">
     <div class="loader">Загружаем меню СамаРамён...</div>
   </main>
 
@@ -474,7 +540,6 @@
       </div>
 
       <div id="cartCheckoutContent">
-        <!-- Блок 1: Заказ из наличия -->
         <div class="cart-section-box" id="sectionStockBox">
           <div class="cart-section-header">
             <input type="checkbox" id="chkIncludeStock" checked onchange="updateCartTotals()">
@@ -483,7 +548,6 @@
           <div id="stockCartItemsContainer"></div>
         </div>
 
-        <!-- Блок 2: Предзаказ -->
         <div class="cart-section-box" id="sectionPreorderBox">
           <div class="cart-section-header">
             <input type="checkbox" id="chkIncludePreorder" checked onchange="updateCartTotals()">
@@ -492,7 +556,6 @@
           <div id="preorderCartItemsContainer"></div>
         </div>
 
-        <!-- Пост-продажная лента -->
         <div class="upsell-section" id="upsellSection">
           <div class="section-title" style="color: var(--primary); margin-bottom: 8px;">🥟 Захватите к заказу:</div>
           <div class="upsell-ribbon" id="upsellRibbon"></div>
@@ -543,7 +606,6 @@
         </form>
       </div>
 
-      <!-- ЭКРАН УСПЕШНОГО ЗАКАЗА С АВТО-ПРИВЯЗКОЙ ТГ -->
       <div id="orderSuccessContent" class="success-screen" style="display:none;">
         <div class="success-icon">✓</div>
         <h2 style="font-size: 22px; font-weight: 800;">Заказ успешно оформлен!</h2>
@@ -580,7 +642,7 @@
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО "МОИ ЗАКАЗЫ" (ОТСЛЕЖИВАНИЕ) -->
+  <!-- МОДАЛЬНОЕ ОКНО "МОИ ЗАКАЗЫ" -->
   <div class="modal-overlay" id="trackModal">
     <div class="modal-box" style="max-width:620px;">
       <div class="modal-header">
@@ -643,11 +705,8 @@
   </div>
 
   <script>
-    // =========================================================================
-    // 1. ВПИШИТЕ ВАШ API_URL (остальное подтянется из листа "Настройки")
-    // =========================================================================
     const CONFIG = {
-      API_URL: 'https://script.google.com/macros/s/AKfycbzVdNIzk03VhsBJawl0NC5ANRRoWNl8NhhvWjOqWwxv19m4__RIvcnV7H04cYIPFayO/exec',
+      API_URL: 'ВСТАВЬТЕ_СЮДА_URL_ВАШЕГО_APPS_SCRIPT_EXEC',
       FEEDBACK_PHONE: '+7 (999) 000-00-00',
       LOGO_URL: 'logo.png',
       SBP_PAYMENT_LINK: '#',
@@ -687,13 +746,15 @@
     let selectedTastes = new Set();
     let currentProductIndex = 0;
     let isDetailMode = false;
-    let isPreorderMode = false; // Режим просмотра товаров под предзаказ
+    let isPreorderMode = false;
+
+    let currentViewMode = 'cards'; // 'cards' (крупные карточки) или 'grid' (компактная сетка)
 
     let currentDishFormat = 'cooked';
     let currentSelectedToppings = new Set();
 
-    let stockCart = [];      // Корзина товаров в наличии
-    let preorderCart = [];   // Корзина товаров под предзаказ
+    let stockCart = [];
+    let preorderCart = [];
     let lastCreatedOrders = [];
 
     function applyRemoteConfig(remoteCfg) {
@@ -721,10 +782,21 @@
       if (cookedTag) cookedTag.textContent = `+${CONFIG.COOKING_FEE} ₽`;
     }
 
-    // =========================================================================
-    // 2. ИНИЦИАЛИЗАЦИЯ И ЗАГРУЗКА
-    // =========================================================================
+    // Управление переключением вида (Карточки / Сетка)
+    function setViewMode(mode) {
+      currentViewMode = mode;
+      document.getElementById('viewModeCards').classList.toggle('active', mode === 'cards');
+      document.getElementById('viewModeGrid').classList.toggle('active', mode === 'grid');
+
+      const catalogView = document.getElementById('catalogView');
+      catalogView.className = 'catalog-view ' + (mode === 'grid' ? 'mode-grid' : 'mode-cards');
+      localStorage.setItem('samaramen_view_mode', mode);
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
+      const savedMode = localStorage.getItem('samaramen_view_mode');
+      if (savedMode === 'grid') setViewMode('grid');
+
       const logoEl = document.getElementById('brandLogo');
       logoEl.onerror = () => { logoEl.src = placeholderImg; };
       applyRemoteConfig(CONFIG);
@@ -746,7 +818,6 @@
       initEvents();
       loadCatalog();
 
-      // Проверка параметров ссылки (например, ?order=SR-123456 открывает отслеживание)
       const urlParams = new URLSearchParams(window.location.search);
       const directOrder = urlParams.get('order');
       if (directOrder) {
@@ -787,7 +858,7 @@
     }
 
     function setupCatalogData(items) {
-      allProducts = items; // Храним все товары (и в наличии, и под предзаказ)
+      allProducts = items;
       allToppings = allProducts.filter(p => p.category === 'Топинги');
 
       renderCategoryRibbon();
@@ -796,14 +867,10 @@
       applyFilters();
     }
 
-    // =========================================================================
-    // 3. ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ОСНОВНЫМ МЕНЮ И ПРЕДЗАКАЗОМ
-    // =========================================================================
     function togglePreorderMode() {
       isPreorderMode = !isPreorderMode;
       const btn = document.getElementById('preorderToggleBtn');
       btn.classList.toggle('active', isPreorderMode);
-      btn.textContent = isPreorderMode ? '📦 Предзаказ (Вкл)' : '📦 Предзаказ';
 
       const subtitle = document.getElementById('headerSubtitle');
       subtitle.textContent = isPreorderMode ? 'Режим предзаказа (товары под заказ)' : 'Корейская кухня и магазин';
@@ -826,7 +893,6 @@
 
     function renderCategoryRibbon() {
       const ribbon = document.getElementById('categoryRibbon');
-      // Фильтруем товары под текущий режим
       const activePool = allProducts.filter(p => isPreorderMode ? !p.inStock : p.inStock);
       const hasRecommended = activePool.some(p => p.recommended === true);
 
@@ -966,7 +1032,6 @@
       const sortVal = document.getElementById('sortSpiciness').value;
 
       filteredProducts = allProducts.filter(item => {
-        // Главная фильтрация по режиму наличия/предзаказа
         if (isPreorderMode) {
           if (item.inStock === true) return false;
         } else {
@@ -1057,9 +1122,6 @@
       addItemToCart(item, null, [], isPreorderMode);
     }
 
-    // =========================================================================
-    // 4. КАРТОЧКА ТОВАРА И ТОППИНГИ (Работает и в наличии, и в предзаказе)
-    // =========================================================================
     function openDetail(index) {
       isDetailMode = true;
       currentProductIndex = index;
@@ -1125,11 +1187,8 @@
       document.getElementById('detailDecl').textContent = item.declaration;
 
       const addBtn = document.getElementById('detailAddBtn');
-      if (isPreorderMode) {
-        addBtn.className = 'add-main-btn preorder-mode-btn';
-      } else {
-        addBtn.className = 'add-main-btn';
-      }
+      if (isPreorderMode) addBtn.className = 'add-main-btn preorder-mode-btn';
+      else addBtn.className = 'add-main-btn';
 
       const modBox = document.getElementById('modifiersBox');
       if (CONFIG.MODIFIER_CATEGORIES.includes(item.category)) {
@@ -1163,11 +1222,8 @@
       const otherToppings = [];
 
       allToppings.forEach(t => {
-        if (recommendedNamesSet.has(t.name.toLowerCase())) {
-          recToppings.push(t);
-        } else {
-          otherToppings.push(t);
-        }
+        if (recommendedNamesSet.has(t.name.toLowerCase())) recToppings.push(t);
+        else otherToppings.push(t);
       });
 
       const recBlock = document.getElementById('recToppingsBlock');
@@ -1245,9 +1301,6 @@
       showCatalog();
     }
 
-    // =========================================================================
-    // 5. ДВОЙНАЯ КОРЗИНА И ЛЕНТА ДОПРОДАЖ (UPSELL)
-    // =========================================================================
     function addItemToCart(item, formatLabel, toppingsList, isPre) {
       let unitPrice = item.price || 0;
       if (formatLabel && formatLabel.includes('Готовое блюдо')) unitPrice += CONFIG.COOKING_FEE;
@@ -1262,15 +1315,8 @@
         existing.totalPrice = existing.qty * existing.unitPrice;
       } else {
         targetCart.push({
-          signature: sig,
-          productId: item.id,
-          name: item.name,
-          photo: item.photo,
-          formatLabel: formatLabel,
-          toppings: toppingsList,
-          unitPrice: unitPrice,
-          qty: 1,
-          totalPrice: unitPrice
+          signature: sig, productId: item.id, name: item.name, photo: item.photo,
+          formatLabel: formatLabel, toppings: toppingsList, unitPrice: unitPrice, qty: 1, totalPrice: unitPrice
         });
       }
 
@@ -1322,7 +1368,6 @@
       const sectionStockBox = document.getElementById('sectionStockBox');
       const sectionPreorderBox = document.getElementById('sectionPreorderBox');
 
-      // 1. Рендер наличия
       if (stockCart.length === 0) {
         sectionStockBox.style.display = 'none';
         document.getElementById('chkIncludeStock').checked = false;
@@ -1345,7 +1390,6 @@
         `).join('');
       }
 
-      // 2. Рендер предзаказа
       if (preorderCart.length === 0) {
         sectionPreorderBox.style.display = 'none';
         document.getElementById('chkIncludePreorder').checked = false;
@@ -1383,7 +1427,6 @@
       if (includeStock) subtotal += stockCart.reduce((acc, c) => acc + c.totalPrice, 0);
       if (includePreorder) subtotal += preorderCart.reduce((acc, c) => acc + c.totalPrice, 0);
 
-      // Доставка 300 ₽ только если выбран заказ из наличия
       const delivery = includeStock ? CONFIG.DELIVERY_COST : 0;
       const total = subtotal + delivery;
 
@@ -1400,7 +1443,6 @@
       const ribbon = document.getElementById('upsellRibbon');
       const regex = /пирож|пянсе|латяо|наклейк|стикер|мармелад|моти/i;
 
-      // Допродажа берётся из обычных товаров в наличии
       const upsellItems = allProducts.filter(p => p.inStock && regex.test(p.name));
       if (upsellItems.length === 0) {
         upsellSection.style.display = 'none';
@@ -1425,9 +1467,6 @@
       renderCartModalContent();
     }
 
-    // =========================================================================
-    // 6. ОФОРМЛЕНИЕ И РАЗДЕЛЕНИЕ ЗАКАЗОВ (НАЛИЧИЕ И ПРЕДЗАКАЗ)
-    // =========================================================================
     async function submitOrder(e) {
       e.preventDefault();
       const includeStock = document.getElementById('chkIncludeStock').checked && stockCart.length > 0;
@@ -1454,40 +1493,22 @@
         const totalWithDelivery = itemsSubtotal + CONFIG.DELIVERY_COST;
         const totalCard = Math.ceil(totalWithDelivery * 1.15);
         subOrders.push({
-          orderId: 'SR-' + baseRand,
-          orderType: 'Заказ',
-          items: stockCart,
-          itemsSubtotal,
-          deliveryCost: CONFIG.DELIVERY_COST,
-          totalWithDelivery,
-          totalCard
+          orderId: 'SR-' + baseRand, orderType: 'Заказ', items: stockCart,
+          itemsSubtotal, deliveryCost: CONFIG.DELIVERY_COST, totalWithDelivery, totalCard
         });
       }
 
       if (includePreorder) {
         const itemsSubtotal = preorderCart.reduce((acc, c) => acc + c.totalPrice, 0);
-        const totalWithDelivery = itemsSubtotal; // Без доставки
+        const totalWithDelivery = itemsSubtotal;
         const totalCard = Math.ceil(totalWithDelivery * 1.15);
         subOrders.push({
-          orderId: 'PRE-' + (baseRand + 1),
-          orderType: 'Предзаказ',
-          items: preorderCart,
-          itemsSubtotal,
-          deliveryCost: 0,
-          totalWithDelivery,
-          totalCard
+          orderId: 'PRE-' + (baseRand + 1), orderType: 'Предзаказ', items: preorderCart,
+          itemsSubtotal, deliveryCost: 0, totalWithDelivery, totalCard
         });
       }
 
-      const payload = {
-        action: 'createOrders',
-        address,
-        comment,
-        phone,
-        messenger,
-        email,
-        subOrders
-      };
+      const payload = { action: 'createOrders', address, comment, phone, messenger, email, subOrders };
 
       try {
         const res = await fetch(CONFIG.API_URL, {
@@ -1496,14 +1517,9 @@
           body: JSON.stringify(payload)
         });
         const json = await res.json();
-        if (json && json.status === 'ok') {
-          lastCreatedOrders = json.createdOrders;
-        }
-      } catch (err) {
-        console.warn('Ошибка отправки:', err);
-      }
+        if (json && json.status === 'ok') lastCreatedOrders = json.createdOrders;
+      } catch (err) {}
 
-      // Очищаем только выбранные корзины
       if (includeStock) stockCart = [];
       if (includePreorder) preorderCart = [];
       saveCarts();
@@ -1530,7 +1546,7 @@
             </div>
             <div class="copy-box" style="margin-bottom:8px;">
               <span>Номер: ${o.orderId}</span>
-              <button type="button" class="copy-btn" onclick="copyToClipboard('${o.orderId}')">📋 Скопировать номер</button>
+              <button type="button" class="copy-btn" onclick="copyToClipboard('${o.orderId}')">📋 Скопировать</button>
             </div>
             ${!isPre ? `
               <div style="display:flex; gap:8px; margin-bottom:8px;">
@@ -1539,53 +1555,34 @@
                 </button>
               </div>
             ` : `
-              <p style="font-size:13px; color:#5F6368; margin-bottom:8px;">
-                ⏳ Предзаказ оформлен без оплаты. Мы свяжемся с вами для уточнения сроков.
-              </p>
+              <p style="font-size:13px; color:#5F6368; margin-bottom:8px;">⏳ Предзаказ оформлен без оплаты. Мы свяжемся с вами для уточнения сроков.</p>
             `}
-            <div style="font-size:13px;">
-              <a href="${o.trackUrl}" target="_blank">🔗 Прямая ссылка на отслеживание</a>
-            </div>
+            <div style="font-size:13px;"><a href="${o.trackUrl}" target="_blank">🔗 Прямая ссылка на отслеживание</a></div>
           </div>
         `;
       }).join('');
     }
 
     function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Скопировано в буфер обмена: ' + text);
-      });
+      navigator.clipboard.writeText(text).then(() => { alert('Скопировано в буфер обмена: ' + text); });
     }
 
-    // =========================================================================
-    // 7. ОПЛАТА И ЗАГРУЗКА ЧЕКА КЛИЕНТОМ
-    // =========================================================================
     function openPaymentModalForOrder(orderId, sbpSum, cardSum) {
       const body = document.getElementById('payModalBody');
       document.getElementById('payModalTitle').textContent = `Оплата заказа ${orderId}`;
 
       body.innerHTML = `
         <div style="display:flex; flex-direction:column; gap:12px;">
-          <div style="font-size:14px; color:var(--text-muted);">
-            Выберите удобный способ оплаты, затем прикрепите чек об оплате ниже:
-          </div>
-          <button type="button" class="pay-btn-sbp" onclick="openSbpModalCustom(${sbpSum})">
-            Оплатить через СБП (${sbpSum} ₽)
-          </button>
-          <button type="button" class="pay-btn-card" onclick="openCardModalCustom('${orderId}', ${cardSum})">
-            Оплатить картой (+15% = ${cardSum} ₽)
-          </button>
+          <div style="font-size:14px; color:var(--text-muted);">Выберите удобный способ оплаты, затем прикрепите чек об оплате ниже:</div>
+          <button type="button" class="pay-btn-sbp" onclick="openSbpModalCustom(${sbpSum})">🏦 Оплатить через СБП (${sbpSum} ₽)</button>
+          <button type="button" class="pay-btn-card" onclick="openCardModalCustom('${orderId}', ${cardSum})">💳 Оплатить картой (+15% = ${cardSum} ₽)</button>
 
           <div class="receipt-upload-box">
             <div style="font-size:14px; font-weight:800; margin-bottom:6px;">🧾 Загрузить чек об оплате</div>
-            <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">
-              Прикрепите скриншот/PDF чека или вставьте ссылку на него:
-            </p>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Прикрепите скриншот/PDF чека или вставьте ссылку:</p>
             <input type="file" id="custReceiptFile" accept="image/*,.pdf" style="font-size:12px; margin-bottom:8px; display:block; width:100%;">
             <input type="text" id="custReceiptLink" class="form-input" placeholder="Или вставьте ссылку на чек" style="margin-bottom:8px;">
-            <button type="button" class="add-main-btn" onclick="submitCustomerReceipt('${orderId}')">
-              Отправить чек на проверку
-            </button>
+            <button type="button" class="add-main-btn" onclick="submitCustomerReceipt('${orderId}')">Отправить чек на проверку</button>
           </div>
         </div>
       `;
@@ -1622,27 +1619,17 @@
         fileObj = { fileName: file.name, mimeType: file.type || 'image/jpeg', base64Data };
       }
 
-      if (!receiptLink && !fileObj) {
-        alert('Пожалуйста, выберите файл чека или вставьте ссылку.');
-        return;
-      }
+      if (!receiptLink && !fileObj) { alert('Пожалуйста, выберите файл чека или вставьте ссылку.'); return; }
 
-      const payload = {
-        action: 'uploadPaymentReceipt',
-        orderId: orderId,
-        receiptLink: receiptLink,
-        fileObj: fileObj
-      };
+      const payload = { action: 'uploadPaymentReceipt', orderId: orderId, receiptLink: receiptLink, fileObj: fileObj };
 
       try {
         const res = await fetch(CONFIG.API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
+          method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload)
         });
         const json = await res.json();
         if (json && json.status === 'ok') {
-          alert('✅ Чек успешно отправлен на проверку! Статус заказа изменён на "Проверка оплаты".');
+          alert('✅ Чек успешно отправлен на проверку!');
           document.getElementById('paymentModal').classList.remove('open');
           closeCartModal();
         } else {
@@ -1653,31 +1640,20 @@
       }
     }
 
-    // =========================================================================
-    // 8. ОКНО ОТСЛЕЖИВАНИЯ "МОИ ЗАКАЗЫ" (ИСТОРИЯ, ПОВТОР, ОТМЕНА)
-    // =========================================================================
-    function openTrackModal() {
-      document.getElementById('trackModal').classList.add('open');
-    }
+    function openTrackModal() { document.getElementById('trackModal').classList.add('open'); }
 
     async function performOrderSearch() {
       const query = document.getElementById('trackSearchInput').value.trim();
       const resultsContainer = document.getElementById('trackSearchResults');
-      if (!query) {
-        resultsContainer.innerHTML = '<div style="color:var(--primary); font-size:13px;">Введите номер телефона или номер заказа.</div>';
-        return;
-      }
+      if (!query) { resultsContainer.innerHTML = '<div style="color:var(--primary); font-size:13px;">Введите номер телефона или номер заказа.</div>'; return; }
 
       resultsContainer.innerHTML = '<div style="text-align:center; padding:20px;">Ищем заказы...</div>';
 
       try {
         const res = await fetch(`${CONFIG.API_URL}?action=track&query=${encodeURIComponent(query)}`);
         const json = await res.json();
-        if (json && json.status === 'ok') {
-          renderTrackResults(json.orders);
-        } else {
-          resultsContainer.innerHTML = '<div style="color:var(--text-muted); padding:10px;">Заказы не найдены.</div>';
-        }
+        if (json && json.status === 'ok') renderTrackResults(json.orders);
+        else resultsContainer.innerHTML = '<div style="color:var(--text-muted); padding:10px;">Заказы не найдены.</div>';
       } catch (err) {
         resultsContainer.innerHTML = '<div style="color:var(--primary); padding:10px;">Ошибка поиска. Попробуйте позже.</div>';
       }
@@ -1685,32 +1661,15 @@
 
     function renderTrackResults(orders) {
       const container = document.getElementById('trackSearchResults');
-      if (!orders || orders.length === 0) {
-        container.innerHTML = '<div style="color:var(--text-muted); padding:10px;">По вашему запросу заказов не найдено.</div>';
-        return;
-      }
+      if (!orders || orders.length === 0) { container.innerHTML = '<div style="color:var(--text-muted); padding:10px;">По вашему запросу заказов не найдено.</div>'; return; }
 
       container.innerHTML = orders.map(o => {
         const isPre = o.orderType === 'Предзаказ';
-        const cancelBtnHtml = o.canCancel
-          ? `<button type="button" class="action-sub-btn danger" onclick="cancelCustomerOrder('${o.orderId}')">❌ Отменить заказ</button>`
-          : '';
-
-        const payOrReceiptBtn = (o.status === 'Новый' || o.status === 'Ожидает оплаты') && !isPre
-          ? `<button type="button" class="action-sub-btn primary" onclick="openPaymentModalForOrder('${o.orderId}', ${o.totalSbp}, ${o.totalCard})">💳 Оплатить / Загрузить чек</button>`
-          : '';
-
-        const receiptLinkHtml = o.customerReceiptUrl
-          ? `<div style="font-size:12px; margin-top:4px;"><a href="${o.customerReceiptUrl}" target="_blank">🧾 Ваш загруженный чек</a></div>`
-          : '';
-
-        const ourReceiptHtml = o.ourReceiptUrl
-          ? `<div style="font-size:12px; margin-top:4px;"><a href="${o.ourReceiptUrl}" target="_blank">🧾 Кассовый чек заведения</a></div>`
-          : '';
-
-        const statusInfoHtml = o.statusInfo
-          ? `<div style="font-size:12px; color:#1557B0; background:#E8F0FE; padding:6px 10px; border-radius:6px; margin-top:6px;">ℹ️ ${o.statusInfo}</div>`
-          : '';
+        const cancelBtnHtml = o.canCancel ? `<button type="button" class="action-sub-btn danger" onclick="cancelCustomerOrder('${o.orderId}')">❌ Отменить заказ</button>` : '';
+        const payOrReceiptBtn = (o.status === 'Новый' || o.status === 'Ожидает оплаты') && !isPre ? `<button type="button" class="action-sub-btn primary" onclick="openPaymentModalForOrder('${o.orderId}', ${o.totalSbp}, ${o.totalCard})">💳 Оплатить / Загрузить чек</button>` : '';
+        const receiptLinkHtml = o.customerReceiptUrl ? `<div style="font-size:12px; margin-top:4px;"><a href="${o.customerReceiptUrl}" target="_blank">🧾 Ваш загруженный чек</a></div>` : '';
+        const ourReceiptHtml = o.ourReceiptUrl ? `<div style="font-size:12px; margin-top:4px;"><a href="${o.ourReceiptUrl}" target="_blank">🧾 Кассовый чек заведения</a></div>` : '';
+        const statusInfoHtml = o.statusInfo ? `<div style="font-size:12px; color:#1557B0; background:#E8F0FE; padding:6px 10px; border-radius:6px; margin-top:6px;">ℹ️ ${o.statusInfo}</div>` : '';
 
         return `
           <div class="track-order-card">
@@ -1720,17 +1679,11 @@
             </div>
             <div style="font-size:13px; color:var(--text-muted); margin-bottom:6px;">🕒 ${o.createdAt} | Адрес: ${o.address}</div>
             <div style="font-size:14px; font-weight:800; color:#137333; margin-bottom:8px;">Сумма: ${o.totalSbp} ₽</div>
-            
             <div style="font-size:13px; font-family:monospace; background:#F8F9FA; padding:8px; border-radius:8px; white-space:pre-wrap; margin-bottom:8px;">${o.itemsText}</div>
-            
-            ${receiptLinkHtml}
-            ${ourReceiptHtml}
-            ${statusInfoHtml}
-
+            ${receiptLinkHtml}${ourReceiptHtml}${statusInfoHtml}
             <div class="track-actions-row">
               <button type="button" class="action-sub-btn" onclick='repeatOrder(${JSON.stringify(o.items)}, "${o.orderType}")'>🔄 Повторить заказ</button>
-              ${payOrReceiptBtn}
-              ${cancelBtnHtml}
+              ${payOrReceiptBtn}${cancelBtnHtml}
             </div>
           </div>
         `;
@@ -1741,20 +1694,13 @@
       if (!confirm(`Вы действительно хотите отменить заказ ${orderId}?`)) return;
       try {
         const res = await fetch(CONFIG.API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({ action: 'cancelOrder', orderId })
         });
         const json = await res.json();
-        if (json && json.status === 'ok') {
-          alert('Заказ успешно отменён.');
-          performOrderSearch();
-        } else {
-          alert(json.message || 'Не удалось отменить заказ');
-        }
-      } catch (e) {
-        alert('Ошибка сети: ' + e.message);
-      }
+        if (json && json.status === 'ok') { alert('Заказ успешно отменён.'); performOrderSearch(); }
+        else alert(json.message || 'Не удалось отменить заказ');
+      } catch (e) { alert('Ошибка сети: ' + e.message); }
     }
 
     function repeatOrder(items, orderType) {
@@ -1765,14 +1711,9 @@
       items.forEach(it => {
         targetCart.push({
           signature: `${it.productId}|${it.formatLabel || ''}|${(it.toppings||[]).map(t=>t.id).sort().join(',')}`,
-          productId: it.productId,
-          name: it.name,
-          photo: it.photo,
-          formatLabel: it.formatLabel,
-          toppings: it.toppings || [],
-          unitPrice: it.unitPrice,
-          qty: it.qty,
-          totalPrice: it.totalPrice
+          productId: it.productId, name: it.name, photo: it.photo,
+          formatLabel: it.formatLabel, toppings: it.toppings || [],
+          unitPrice: it.unitPrice, qty: it.qty, totalPrice: it.totalPrice
         });
       });
 
@@ -1783,19 +1724,12 @@
       alert(`Позиции добавлены в корзину (${isPre ? 'Предзаказ' : 'Наличие'})!`);
     }
 
-    // =========================================================================
-    // 9. ОБРАБОТЧИКИ СОБЫТИЙ
-    // =========================================================================
     function initEvents() {
       document.getElementById('searchInput').addEventListener('input', () => {
         applyFilters();
         if (isDetailMode) {
-          if (filteredProducts.length > 0) {
-            currentProductIndex = 0;
-            renderDetail();
-          } else {
-            showCatalog();
-          }
+          if (filteredProducts.length > 0) { currentProductIndex = 0; renderDetail(); }
+          else showCatalog();
         }
       });
 
@@ -1803,15 +1737,10 @@
 
       const tasteBtn = document.getElementById('tasteBtn');
       const tasteMenu = document.getElementById('tasteMenu');
-      tasteBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        tasteMenu.classList.toggle('open');
-      });
+      tasteBtn.addEventListener('click', (e) => { e.stopPropagation(); tasteMenu.classList.toggle('open'); });
 
       document.addEventListener('click', (e) => {
-        if (!document.getElementById('tasteDropdownWrapper').contains(e.target)) {
-          tasteMenu.classList.remove('open');
-        }
+        if (!document.getElementById('tasteDropdownWrapper').contains(e.target)) tasteMenu.classList.remove('open');
       });
 
       document.getElementById('backToCatalogBtn').addEventListener('click', showCatalog);
