@@ -1,0 +1,27 @@
+{
+  "id": "./",
+  "name": "СамаРамён — корейская кухня и магазин",
+  "short_name": "СамаРамён",
+  "description": "Меню, корзина, доставка и предзаказ СамаРамён.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F8F9FA",
+  "theme_color": "#D93025",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
