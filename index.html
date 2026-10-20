@@ -138,13 +138,47 @@
     .taste-option.disabled { opacity: 0.38; cursor: not-allowed; }
     .taste-option input[type="checkbox"] { accent-color: var(--primary); }
 
-    /* Переключатель вида: Карточки / Сетка */
+    /* Переключатель вида: Карточки / Таблица */
     .view-mode-group { display: inline-flex; background: #F1F3F4; padding: 3px; border-radius: 8px; gap: 2px; }
     .view-mode-btn {
       background: transparent; border: none; padding: 5px 10px; font-size: 12px; font-weight: 700;
       border-radius: 6px; cursor: pointer; color: var(--text-muted); transition: all 0.15s;
     }
     .view-mode-btn.active { background: #FFF; color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+    /* Альтернативный табличный вид каталога */
+    .catalog-view.mode-table {
+      display: block;
+      max-width: 1200px;
+      margin: 12px auto 24px;
+      padding: 0 16px;
+      overflow-x: auto;
+    }
+    .catalog-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-size: 14px; }
+    .catalog-table th { background: #F1F3F4; color: #3C4043; text-align: left; padding: 11px 12px; font-size: 12px; font-weight: 800; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .catalog-table td { padding: 9px 12px; border-bottom: 1px solid #E8EAED; vertical-align: middle; }
+    .catalog-table tbody tr { cursor: pointer; }
+    .catalog-table tbody tr:hover { background: #FAFAFB; }
+    .catalog-table tbody tr:last-child td { border-bottom: none; }
+    .catalog-table .table-product-name { font-weight: 700; min-width: 190px; }
+    .catalog-table .table-category { color: var(--text-muted); white-space: nowrap; }
+    .catalog-table .table-price { font-weight: 800; white-space: nowrap; }
+    .catalog-table .table-meta { color: var(--text-muted); font-size: 12px; }
+    .catalog-table .table-thumb { width: 46px; height: 46px; border-radius: 6px; object-fit: cover; display: block; background: #F1F3F4; }
+    .catalog-table .table-add-cell { text-align: right; white-space: nowrap; }
+    .catalog-table .table-add-cell .card-add-btn { padding: 8px 11px; }
+    .table-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
+    .table-badge { display: inline-block; border-radius: 4px; padding: 2px 5px; background: #F1F3F4; color: #5F6368; font-size: 10px; font-weight: 700; white-space: nowrap; }
+    .table-badge.spicy { background: #FCE8E6; color: #B3261E; }
+    .table-badge.preorder { background: #E8F0FE; color: #174EA6; }
+    @media (max-width: 620px) {
+      .catalog-view.mode-table { padding: 0 6px; }
+      .catalog-table { font-size: 12px; }
+      .catalog-table th, .catalog-table td { padding: 8px 7px; }
+      .catalog-table .table-thumb-cell, .catalog-table .table-category-cell { display: none; }
+      .catalog-table .table-product-name { min-width: 150px; }
+      .catalog-table .table-add-cell .card-add-btn { padding: 7px 8px; font-size: 11px; }
+    }
 
     .detail-nav-panel { display: none; align-items: center; gap: 8px; width: 100%; justify-content: space-between; padding: 8px 16px; background: #FFF; }
     .btn {
@@ -419,10 +453,10 @@
           </select>
         </div>
 
-        <!-- Переключатель вида справа -->
+        <!-- Переключатель вида: карточки или полноценная таблица -->
         <div class="view-mode-group">
-          <button type="button" class="view-mode-btn active" id="viewModeCards" onclick="setViewMode('cards')" title="Крупные карточки">Карточки</button>
-          <button type="button" class="view-mode-btn" id="viewModeGrid" onclick="setViewMode('grid')" title="Компактная сетка">Сетка</button>
+          <button type="button" class="view-mode-btn active" id="viewModeCards" onclick="setViewMode('cards')" title="Карточки товаров">Карточки</button>
+          <button type="button" class="view-mode-btn" id="viewModeTable" onclick="setViewMode('table')" title="Табличный список товаров">Таблица</button>
         </div>
       </div>
 
@@ -748,7 +782,7 @@
     let isDetailMode = false;
     let isPreorderMode = false;
 
-    let currentViewMode = 'cards'; // 'cards' (крупные карточки) или 'grid' (компактная сетка)
+    let currentViewMode = 'cards'; // 'cards' (карточки) или 'table' (таблица)
 
     let currentDishFormat = 'cooked';
     let currentSelectedToppings = new Set();
@@ -782,20 +816,21 @@
       if (cookedTag) cookedTag.textContent = `+${CONFIG.COOKING_FEE} ₽`;
     }
 
-    // Управление переключением вида (Карточки / Сетка)
+    // Управление переключением вида: карточки / таблица
     function setViewMode(mode) {
-      currentViewMode = mode;
-      document.getElementById('viewModeCards').classList.toggle('active', mode === 'cards');
-      document.getElementById('viewModeGrid').classList.toggle('active', mode === 'grid');
+      currentViewMode = mode === 'table' ? 'table' : 'cards';
+      document.getElementById('viewModeCards').classList.toggle('active', currentViewMode === 'cards');
+      document.getElementById('viewModeTable').classList.toggle('active', currentViewMode === 'table');
 
       const catalogView = document.getElementById('catalogView');
-      catalogView.className = 'catalog-view ' + (mode === 'grid' ? 'mode-grid' : 'mode-cards');
-      localStorage.setItem('samaramen_view_mode', mode);
+      catalogView.className = 'catalog-view ' + (currentViewMode === 'table' ? 'mode-table' : 'mode-cards');
+      localStorage.setItem('samaramen_view_mode', currentViewMode);
+      if (!isDetailMode) renderCatalog();
     }
 
     window.addEventListener('DOMContentLoaded', () => {
       const savedMode = localStorage.getItem('samaramen_view_mode');
-      if (savedMode === 'grid') setViewMode('grid');
+      if (savedMode === 'table') setViewMode('table');
 
       const logoEl = document.getElementById('brandLogo');
       logoEl.onerror = () => { logoEl.src = placeholderImg; };
@@ -1076,6 +1111,28 @@
         return;
       }
 
+      if (currentViewMode === 'table') {
+        const rows = filteredProducts.map((item, index) => {
+          const photoUrl = item.photo || placeholderImg;
+          const hasMods = CONFIG.MODIFIER_CATEGORIES.includes(item.category);
+          const badges = [
+            item.taste ? `<span class="table-badge">${item.taste}</span>` : '',
+            Number(item.spiciness) > 0 ? `<span class="table-badge spicy">🌶 ${item.spiciness}/5</span>` : '',
+            isPreorderMode ? '<span class="table-badge preorder">Предзаказ</span>' : ''
+          ].filter(Boolean).join('');
+          return `<tr onclick="openDetail(${index})">
+            <td class="table-thumb-cell"><img class="table-thumb" src="${photoUrl}" alt="" loading="lazy" onerror="this.src='${placeholderImg}'"></td>
+            <td><div class="table-product-name">${item.name}</div><div class="table-badges">${badges}</div></td>
+            <td class="table-category table-category-cell">${item.category || '—'}</td>
+            <td><span class="table-price">${item.price} ₽</span></td>
+            <td class="table-meta">${item.weight || '—'}</td>
+            <td class="table-add-cell"><button class="card-add-btn ${isPreorderMode ? 'preorder-btn' : ''}" onclick="quickAddFromCard(event, ${index})">${hasMods ? 'Собрать' : (isPreorderMode ? '+ Предзаказ' : '+ В корзину')}</button></td>
+          </tr>`;
+        }).join('');
+        container.innerHTML = `<table class="catalog-table"><thead><tr><th class="table-thumb-cell">Фото</th><th>Товар</th><th class="table-category-cell">Категория</th><th>Цена</th><th>Вес</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+        return;
+      }
+
       container.innerHTML = filteredProducts.map((item, index) => {
         const photoUrl = item.photo ? item.photo : placeholderImg;
         const spicyBadge = item.spiciness > 0 ? `<div class="badge badge-spicy">🌶️ ${item.spiciness}/5</div>` : '';
@@ -1095,17 +1152,11 @@
               <div class="card-category">${item.category}</div>
               <div class="card-title">${item.name}</div>
               <div class="card-footer">
-                <div>
-                  <div class="card-price">${item.price} ₽</div>
-                  <div class="card-weight">${item.weight || ''}</div>
-                </div>
-                <button class="card-add-btn ${isPreorderMode ? 'preorder-btn' : ''}" onclick="quickAddFromCard(event, ${index})">
-                  ${hasMods ? 'Собрать' : (isPreorderMode ? '+ Предзаказ' : '+ В корзину')}
-                </button>
+                <div><div class="card-price">${item.price} ₽</div><div class="card-weight">${item.weight || ''}</div></div>
+                <button class="card-add-btn ${isPreorderMode ? 'preorder-btn' : ''}" onclick="quickAddFromCard(event, ${index})">${hasMods ? 'Собрать' : (isPreorderMode ? '+ Предзаказ' : '+ В корзину')}</button>
               </div>
             </div>
-          </div>
-        `;
+          </div>`;
       }).join('');
     }
 
@@ -1138,7 +1189,7 @@
       document.getElementById('detailView').style.display = 'none';
       document.getElementById('detailNavPanel').style.display = 'none';
       document.getElementById('filtersRow').style.display = 'flex';
-      document.getElementById('catalogView').style.display = 'grid';
+      document.getElementById('catalogView').style.display = currentViewMode === 'table' ? 'block' : 'grid';
       renderCatalog();
     }
 
