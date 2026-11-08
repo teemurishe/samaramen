@@ -4,12 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>СамаРамён — Доставка и Предзаказ</title>
-  <link id="siteFavicon" rel="icon" type="image/png" href="logo.png">
-  <link rel="apple-touch-icon" href="logo.png">
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#D93025">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <style>
     :root {
       --primary: #D93025;
@@ -30,7 +24,9 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
-      padding-bottom: 90px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* ДВУХУРОВНЕВАЯ ШАПКА */
@@ -43,7 +39,7 @@
       max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column;
     }
 
-    /* УРОВЕНЬ 1: Логотип, Мои заказы (с текстом или иконкой), Телефон, Корзина */
+    /* УРОВЕНЬ 1 */
     .header-level-1 {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
       padding: 10px 16px; border-bottom: 1px solid #F1F3F4;
@@ -59,7 +55,6 @@
 
     .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 
-    /* Кнопка "Мои заказы" (адаптивная: текст на ПК, иконка на мобильных) */
     .track-order-header-btn {
       background: #F1F3F4; border: 1px solid var(--border); color: var(--text);
       border-radius: 20px; padding: 8px 14px; font-size: 13px; font-weight: 700;
@@ -85,7 +80,7 @@
     }
     .header-cart-btn:hover { background: var(--primary-dark); }
 
-    /* УРОВЕНЬ 2: Строка поиска по меню + Кнопка Предзаказ (адаптивная: текст или иконка) */
+    /* УРОВЕНЬ 2 */
     .header-level-2 {
       display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: #FAFAFB; border-bottom: 1px solid var(--border);
     }
@@ -110,20 +105,10 @@
       .preorder-level2-btn { padding: 10px 12px; border-radius: 50%; width: 40px; height: 40px; justify-content: center; }
     }
 
-    /* УРОВЕНЬ 3: Категории (лента) */
+    /* УРОВЕНЬ 3 */
     .category-ribbon-wrap { padding: 8px 16px; border-bottom: 1px solid #F1F3F4; background: #FFF; }
-    .category-ribbon {
-      display: flex; flex-wrap: nowrap; gap: 8px; overflow-x: auto; overflow-y: hidden;
-      scrollbar-width: none; align-items: center;
-    }
+    .category-ribbon { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
     .category-ribbon::-webkit-scrollbar { display: none; }
-    .category-ribbon-wrap { display: flex; align-items: center; gap: 8px; }
-    .category-ribbon-wrap .category-ribbon { flex: 1; min-width: 0; scroll-behavior: smooth; }
-    /* По умолчанию категории занимают одну горизонтально прокручиваемую строку.
-       При раскрытии переносятся на следующие строки, но не исчезают. */
-    .category-ribbon-wrap.expanded .category-ribbon { flex-wrap: wrap; overflow: visible; }
-    .category-ribbon-wrap.expanded { align-items: flex-start; }
-    .category-collapse-btn { flex: 0 0 30px; width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 50%; background: #fff; color: var(--text-muted); font-size: 18px; line-height: 1; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
     .cat-chip {
       padding: 7px 14px; border-radius: 20px; background: #F1F3F4; color: var(--text);
       font-size: 13px; font-weight: 600; white-space: nowrap; border: 1px solid transparent; cursor: pointer; user-select: none;
@@ -131,7 +116,7 @@
     .cat-chip:hover { background: #E8EAED; }
     .cat-chip.active { background: var(--primary); color: #FFFFFF; box-shadow: 0 2px 6px rgba(217,48,37,0.25); }
 
-    /* УРОВЕНЬ 4: Вкус, Острота и Смена вида (Карточки / Сетка) справа */
+    /* УРОВЕНЬ 4 */
     .filters-row {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 16px; background: #FFF;
     }
@@ -152,54 +137,12 @@
     .taste-option.disabled { opacity: 0.38; cursor: not-allowed; }
     .taste-option input[type="checkbox"] { accent-color: var(--primary); }
 
-    /* Переключатель вида: Карточки / Таблица */
     .view-mode-group { display: inline-flex; background: #F1F3F4; padding: 3px; border-radius: 8px; gap: 2px; }
     .view-mode-btn {
       background: transparent; border: none; padding: 5px 10px; font-size: 12px; font-weight: 700;
       border-radius: 6px; cursor: pointer; color: var(--text-muted); transition: all 0.15s;
     }
     .view-mode-btn.active { background: #FFF; color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-
-    /* Альтернативный табличный вид каталога */
-    .catalog-view.mode-table {
-      display: block;
-      max-width: 1200px;
-      margin: 12px auto 24px;
-      padding: 0 16px;
-      overflow-x: auto;
-    }
-    .catalog-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-size: 14px; }
-    .catalog-table th { background: #F1F3F4; color: #3C4043; text-align: left; padding: 11px 12px; font-size: 12px; font-weight: 800; white-space: nowrap; border-bottom: 1px solid var(--border); }
-    .catalog-table td { padding: 9px 12px; border-bottom: 1px solid #E8EAED; vertical-align: middle; }
-    .catalog-table tbody tr { cursor: pointer; }
-    .catalog-table tbody tr:hover { background: #FAFAFB; }
-    .catalog-table tbody tr:last-child td { border-bottom: none; }
-    .catalog-table .table-product-name { font-weight: 700; min-width: 190px; }
-    .catalog-table .table-category { color: var(--text-muted); white-space: nowrap; }
-    .catalog-table .table-price { font-weight: 800; white-space: nowrap; }
-    .catalog-table .table-meta { color: var(--text-muted); font-size: 12px; }
-    .catalog-table .table-thumb { width: 64px; height: 64px; border-radius: 8px; object-fit: cover; display: block; background: #F1F3F4; }
-    .catalog-table .table-description { min-width: 220px; max-width: 460px; color: #3C4043; line-height: 1.4; }
-    .catalog-table .table-weight { white-space: nowrap; color: var(--text-muted); }
-    .catalog-table .table-category-cell { min-width: 125px; white-space: normal; }
-    .catalog-table .table-add-cell { min-width: 135px; }
-    .catalog-table .table-add-cell .card-add-btn { padding: 9px 12px; }
-    .catalog-table .table-add-cell { text-align: right; white-space: nowrap; }
-    .catalog-table .table-add-cell .card-add-btn { padding: 8px 11px; }
-    .table-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
-    .table-badge { display: inline-block; border-radius: 4px; padding: 2px 5px; background: #F1F3F4; color: #5F6368; font-size: 10px; font-weight: 700; white-space: nowrap; }
-    .table-badge.spicy { background: #FCE8E6; color: #B3261E; }
-    .table-badge.preorder { background: #E8F0FE; color: #174EA6; }
-    @media (max-width: 620px) {
-      .catalog-view.mode-table { padding: 0 6px; }
-      .catalog-table { font-size: 12px; }
-      .catalog-table th, .catalog-table td { padding: 8px 7px; }
-      .catalog-table { min-width: 780px; }
-      .catalog-table .table-product-name { min-width: 150px; }
-      .catalog-table .table-thumb { width: 52px; height: 52px; }
-      .catalog-view.mode-table { overflow-x: auto; }
-      .catalog-table .table-add-cell .card-add-btn { padding: 7px 8px; font-size: 11px; }
-    }
 
     .detail-nav-panel { display: none; align-items: center; gap: 8px; width: 100%; justify-content: space-between; padding: 8px 16px; background: #FFF; }
     .btn {
@@ -211,72 +154,83 @@
     .btn-primary { background: var(--primary); color: #FFF; border: none; }
     .btn-primary:hover { background: var(--primary-dark); }
 
-    /* СЕТКА КАТАЛОГА (ДВА РЕЖИМА: КАРТОЧКИ И КОМПАКТНАЯ СЕТКА) */
+    /* КАТАЛОГ: РЕЖИМ КАРТОЧЕК И РЕЖИМ ТАБЛИЦЫ (СТРОКИ) */
     .catalog-view {
-      width: 100%; max-width: 1200px; margin: 18px auto; padding: 0 16px; display: grid; gap: 16px; align-items: stretch;
+      max-width: 1200px; width: 100%; margin: 18px auto; padding: 0 16px; flex-grow: 1;
     }
-    /* Режим 1: Крупные карточки */
+
     .catalog-view.mode-cards {
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      align-content: start;
     }
-    /* Режим 2: Компактная плотная сетка */
-    .catalog-view.mode-grid {
-      grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
-      gap: 10px;
+
+    .catalog-view.mode-table {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     @media (max-width: 520px) {
       .catalog-view.mode-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 10px; }
-      .catalog-view.mode-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 0 6px; }
+      .catalog-view.mode-table { padding: 0 8px; gap: 6px; }
       .brand-subtitle { display: none; }
       .brand-title { font-size: 15px; }
     }
 
     .card {
       background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow);
-      overflow: hidden; cursor: pointer; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);
+      overflow: hidden; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);
     }
-    .card { min-width: 0; width: 100%; max-width: 100%; }
     .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
 
-    /* Фото в режиме сетки делаем компактнее */
-    .catalog-view.mode-grid .card-photo-wrapper { height: 110px; }
-    .catalog-view.mode-cards .card-photo-wrapper { height: 175px; }
-    .card-photo-wrapper { position: relative; width: 100%; background: #F1F3F4; overflow: hidden; }
-    .card-photo { width: 100%; height: 100%; object-fit: cover; }
-
-    .badge { position: absolute; padding: 3px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; color: #FFF; backdrop-filter: blur(4px); }
-    .badge-spicy { bottom: 6px; left: 6px; background: rgba(217, 48, 37, 0.9); }
-    .badge-taste { top: 6px; left: 6px; background: rgba(32, 33, 36, 0.75); }
-    .badge-preorder { top: 6px; right: 6px; background: rgba(26, 115, 232, 0.9); font-size: 9px; }
-
-    .card-body { padding: 10px 12px 12px; display: flex; flex-direction: column; flex-grow: 1; }
-    .catalog-view.mode-grid .card-body { padding: 8px; }
-
-    .card-category { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text-muted); margin-bottom: 2px; }
-    .card-title {
-      font-size: 13px; font-weight: 600; line-height: 1.3; margin-bottom: 8px; flex-grow: 1;
+    .catalog-view.mode-cards .card { display: flex; flex-direction: column; }
+    .catalog-view.mode-cards .card-photo-wrapper { position: relative; width: 100%; height: 175px; background: #F1F3F4; overflow: hidden; }
+    .catalog-view.mode-cards .card-body { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; }
+    .catalog-view.mode-cards .card-title {
+      font-size: 14px; font-weight: 600; line-height: 1.35; margin-bottom: 10px; flex-grow: 1;
       display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
-    .catalog-view.mode-grid .card-title { font-size: 11px; -webkit-line-clamp: 3; margin-bottom: 6px; }
+    .catalog-view.mode-cards .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: auto; }
+    .catalog-view.mode-cards .card-price { font-size: 16px; font-weight: 800; color: var(--text); }
 
-    .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-top: auto; }
-    .card-price { font-size: 15px; font-weight: 800; color: var(--text); }
-    .catalog-view.mode-grid .card-price { font-size: 13px; }
-    .card-weight { font-size: 10px; color: var(--text-muted); }
+    .catalog-view.mode-table .card {
+      display: flex; flex-direction: row; align-items: center; padding: 10px 14px; gap: 14px; border-radius: 10px;
+    }
+    .catalog-view.mode-table .card-photo-wrapper {
+      width: 54px; height: 54px; border-radius: 8px; flex-shrink: 0; background: #F1F3F4; overflow: hidden; position: relative;
+    }
+    .catalog-view.mode-table .card-body {
+      display: flex; flex-direction: row; align-items: center; justify-content: space-between; flex-grow: 1; padding: 0; gap: 12px;
+    }
+    .catalog-view.mode-table .card-info-main { display: flex; flex-direction: column; gap: 2px; flex-grow: 1; }
+    .catalog-view.mode-table .card-title { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.25; }
+    .catalog-view.mode-table .card-meta-row { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-muted); }
+    .catalog-view.mode-table .card-footer { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+    .catalog-view.mode-table .card-price { font-size: 16px; font-weight: 800; color: var(--text); white-space: nowrap; }
+
+    .card-photo { width: 100%; height: 100%; object-fit: cover; }
+    .badge { position: absolute; padding: 3px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; color: #FFF; backdrop-filter: blur(4px); }
+    .badge-spicy { bottom: 4px; left: 4px; background: rgba(217, 48, 37, 0.9); font-size: 9px; padding: 2px 4px; }
+    .badge-taste { top: 4px; left: 4px; background: rgba(32, 33, 36, 0.75); }
+    .badge-preorder { top: 4px; right: 4px; background: rgba(26, 115, 232, 0.9); font-size: 9px; padding: 2px 4px; }
+
+    .card-category { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text-muted); margin-bottom: 2px; }
+    .card-weight { font-size: 11px; color: var(--text-muted); }
+
     .card-add-btn {
-      background: #FCE8E6; color: var(--primary); border: none; border-radius: 6px;
-      padding: 5px 10px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s;
+      background: #FCE8E6; color: var(--primary); border: none; border-radius: 8px;
+      padding: 6px 14px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.15s; white-space: nowrap;
     }
     .card-add-btn:hover { background: var(--primary); color: #FFF; }
     .card-add-btn.preorder-btn { background: #E8F0FE; color: #174EA6; }
     .card-add-btn.preorder-btn:hover { background: #1A73E8; color: #FFF; }
-    .catalog-view.mode-grid .card-add-btn { padding: 4px 8px; font-size: 11px; }
 
     /* ЭКРАН ТОВАРА */
-    .detail-view { display: none; width: 100%; max-width: 820px; margin: 16px auto 60px; padding: 0 14px; }
+    .detail-view { display: none; max-width: 820px; width: 100%; margin: 16px auto 60px; padding: 0 14px; flex-grow: 1; }
     .detail-card {
-      background: #FFFFFF; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--border); padding: 22px; display: flex; flex-direction: column; gap: 18px; min-width: 0;
+      background: #FFFFFF; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--border); padding: 22px; display: flex; flex-direction: column; gap: 18px;
     }
     .detail-right-col { display: flex; flex-direction: column; gap: 18px; }
     .detail-img-box { width: 100%; height: 320px; border-radius: 12px; overflow: hidden; background: #F8F9FA; text-align: center; border: 1px solid #F1F3F4; }
@@ -285,16 +239,12 @@
     @media (min-width: 768px) {
       .detail-view { max-width: 1120px; }
       .detail-card {
-        display: grid; grid-template-columns: minmax(280px, 400px) minmax(0, 1fr);
-        grid-template-rows: auto auto auto; column-gap: 28px; row-gap: 14px; align-items: start; padding: 28px;
+        display: grid; grid-template-columns: 400px 1fr; grid-template-rows: auto auto 1fr;
+        column-gap: 32px; row-gap: 16px; align-items: start; padding: 28px;
       }
       .detail-img-box { grid-column: 1; grid-row: 1; height: 380px; }
-      .detail-comp-section { grid-column: 1; grid-row: 2; }
-      .declaration-box { grid-column: 1; grid-row: 3; }
-      /* Весь правый контент остаётся внутри своей колонки и начинается сверху.
-         Не используем display:contents: иначе высота фотографии в первой строке
-         сдвигает кнопку добавления и создаёт пустое пространство. */
-      .detail-right-col { grid-column: 2; grid-row: 1 / span 3; min-width: 0; align-self: start; }
+      .declaration-box { grid-column: 1; grid-row: 2; }
+      .detail-right-col { grid-column: 2; grid-row: 1 / 4; }
     }
 
     .detail-title { font-size: 22px; font-weight: 800; line-height: 1.3; margin-top: 4px; }
@@ -322,6 +272,7 @@
       width: 100%; padding: 15px 20px; font-size: 16px; font-weight: 800; background: var(--primary); color: #FFF; border: none; border-radius: 12px; cursor: pointer;
     }
     .add-main-btn:hover { background: var(--primary-dark); }
+    .add-main-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .add-main-btn.preorder-mode-btn { background: #1A73E8; }
     .add-main-btn.preorder-mode-btn:hover { background: #1557B0; }
 
@@ -337,17 +288,6 @@
     .kbju-label { font-size: 11px; font-weight: 600; color: #1557B0; margin-bottom: 2px; }
     .kbju-val { font-size: 16px; font-weight: 800; color: #174EA6; }
     .declaration-box { padding: 12px 14px; border-radius: 10px; background: #F8F9FA; border: 1px solid var(--border); font-size: 12px; color: var(--text-muted); line-height: 1.45; }
-    .detail-add-secondary { display: none; }
-    @media (max-width: 767px) {
-      .detail-card { padding: 14px; gap: 14px; }
-      .detail-card.has-modifiers #detailAddBarSecondary { display: flex; }
-      .detail-card.has-modifiers #detailCompSection { order: 8; }
-      .detail-card.has-modifiers #detailDeclSection { order: 9; }
-      .detail-img-box { height: min(72vw, 320px); }
-      .kbju-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
-      .kbju-val { font-size: 14px; }
-      .toppings-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)); }
-    }
 
     /* ПЛАВАЮЩАЯ КНОПКА КОРЗИНЫ */
     .floating-cart {
@@ -366,7 +306,7 @@
     }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .modal-title { font-size: 20px; font-weight: 800; }
-    .modal-close { background: #F1F3F4; border: none; width: 34px; height: 34px; border-radius: 50%; font-size: 18px; cursor: pointer; }
+    .modal-close { background: #F1F3F4; border: none; width: 34px; height: 34px; border-radius: 50%; font-size: 18px; cursor: pointer; flex-shrink: 0; }
 
     /* ДВОЙНАЯ КОРЗИНА */
     .cart-section-box { border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 12px; background: #FAFBFD; }
@@ -396,6 +336,15 @@
     .form-input:focus { border-color: var(--primary); }
     .delivery-note { font-size: 12px; color: #5F6368; background: #F8F9FA; border-left: 3px solid var(--primary); padding: 10px 12px; border-radius: 6px; margin: 12px 0; line-height: 1.45; }
 
+    .consent-checkbox-row {
+      display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: var(--text-muted);
+      margin: 12px 0 14px; line-height: 1.4;
+    }
+    .consent-checkbox-row input[type="checkbox"] {
+      margin-top: 2px; accent-color: var(--primary); width: 16px; height: 16px; flex-shrink: 0; cursor: pointer;
+    }
+    .consent-checkbox-row a { color: var(--primary); text-decoration: underline; cursor: pointer; font-weight: 600; }
+
     .success-screen { text-align: center; padding: 10px 4px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
     .success-icon { width: 64px; height: 64px; border-radius: 50%; background: #E6F4EA; color: #137333; display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: bold; }
     .feedback-phone-box { width: 100%; padding: 10px 14px; background: #F8F9FA; border: 1px solid var(--border); border-radius: 10px; font-size: 13px; color: var(--text-muted); }
@@ -422,28 +371,80 @@
     .action-sub-btn.danger { background: #FCE8E6; color: #C5221F; border-color: #FAD2CF; }
     .action-sub-btn.primary { background: #E8F0FE; color: #174EA6; border-color: #D2E3FC; }
 
-
-    .copy-amount { display: inline-block; border: 0; padding: 2px 6px; margin-top: 2px; background: transparent; color: #137333; font: inherit; font-size: 26px; font-weight: 800; cursor: pointer; border-radius: 8px; }
-    #cardExactAmount.copy-amount { color: #174EA6; }
-    .copy-amount:hover { background: rgba(0,0,0,.05); }
-    .receipt-dropzone { display:flex; flex-direction:column; align-items:center; gap:6px; padding:22px 14px; margin-bottom:14px; border:2px dashed #c9d1dc; border-radius:14px; background:#fff; cursor:pointer; transition: border-color .15s, background .15s; }
-    .receipt-dropzone:hover, .receipt-dropzone.dragover { border-color:var(--primary); background:#fff8f7; }
-    .receipt-upload-icon { width:42px; height:42px; border-radius:50%; display:grid; place-items:center; background:#FCE8E6; color:var(--primary); font-size:26px; font-weight:700; }
-    .receipt-file-hint { color:var(--text-muted); font-size:12px; }
-    .receipt-file-name { color:#174EA6; font-size:12px; font-weight:700; max-width:100%; overflow-wrap:anywhere; }
-    .site-toast { position:fixed; z-index:1000; left:50%; bottom:24px; transform:translate(-50%, 18px); opacity:0; pointer-events:none; background:#202124; color:#fff; border-radius:12px; padding:12px 18px; max-width:min(92vw,560px); box-shadow:0 8px 28px rgba(0,0,0,.25); font-size:14px; font-weight:600; text-align:center; transition:opacity .18s ease, transform .18s ease; }
-    .site-toast.show { opacity:1; transform:translate(-50%,0); }
-    .site-toast.error { background:#B3261E; }
-    .utility-modal .modal-box { max-width:420px; text-align:center; }
-    .utility-modal-icon { width:48px; height:48px; margin:0 auto 12px; display:grid; place-items:center; border-radius:50%; background:#E8F0FE; color:#174EA6; font-size:25px; font-weight:800; }
-    .utility-modal-icon.error { background:#FCE8E6; color:#B3261E; }
-    .utility-modal-icon.success { background:#E6F4EA; color:#137333; }
-    .utility-modal-message { color:#3C4043; font-size:14px; line-height:1.5; white-space:pre-wrap; margin-bottom:20px; }
-    .utility-modal-actions { display:flex; gap:10px; justify-content:center; }
-    .utility-modal-actions .btn { min-width:110px; justify-content:center; }
-    @media (prefers-reduced-motion: reduce) { .site-toast, .receipt-dropzone { transition:none; } }
-
     .loader { text-align: center; padding: 60px 20px; font-size: 15px; color: var(--text-muted); grid-column: 1 / -1; }
+
+    /* ПОДВАЛ САЙТА (ДЛЯ ЭКВАЙРИНГА ТОЧКА БАНКА И 152-ФЗ) */
+    .site-footer {
+      background: #FFFFFF;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+      padding: 28px 16px 95px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .footer-col-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .footer-links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .footer-link {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .footer-link:hover { text-decoration: underline; }
+    .pay-systems-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .pay-badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #F8F9FA;
+      font-weight: 800;
+      font-size: 11px;
+      color: var(--text);
+    }
+
+    /* ЮРИДИЧЕСКИЕ ТЕКСТЫ В МОДАЛЬНОМ ОКНЕ */
+    .legal-doc-content {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #3C4043;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .legal-doc-content h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      margin-top: 6px;
+    }
+    .legal-doc-content ul, .legal-doc-content ol {
+      padding-left: 20px;
+    }
   </style>
 </head>
 <body>
@@ -452,7 +453,7 @@
   <header class="header-bar">
     <div class="header-content">
       
-      <!-- УРОВЕНЬ 1: Логотип, Мои заказы, Телефон, Корзина -->
+      <!-- УРОВЕНЬ 1 -->
       <div class="header-level-1">
         <div class="brand-box" onclick="switchToNormalCatalog()">
           <img id="brandLogo" class="brand-logo" src="" alt="СамаРамён">
@@ -463,13 +464,10 @@
         </div>
 
         <div class="header-actions">
-          <!-- Кнопка Мои заказы (Адаптивная: текст на широких, иконка на узких) -->
           <button class="track-order-header-btn" onclick="openTrackModal()" title="Мои заказы и отслеживание">
             <span>📦</span> <span class="track-text-label">Мои заказы</span>
           </button>
-          <!-- Иконка телефона -->
           <a id="headerPhoneBtn" href="tel:" class="header-icon-btn" title="Связаться с нами">📞</a>
-          <!-- Корзина -->
           <button class="header-cart-btn" onclick="openCartModal()">
             <span>🛒</span>
             <span id="headerCartTotal">0 ₽</span>
@@ -477,7 +475,7 @@
         </div>
       </div>
 
-      <!-- УРОВЕНЬ 2: Поиск по меню + Предзаказ (Адаптивный: текст на широких, иконка на узких) -->
+      <!-- УРОВЕНЬ 2 -->
       <div class="header-level-2">
         <div class="search-input-wrapper">
           <span class="search-icon">🔍</span>
@@ -488,13 +486,12 @@
         </button>
       </div>
 
-      <!-- УРОВЕНЬ 3: Горизонтальная лента категорий -->
-      <div class="category-ribbon-wrap" id="categoryRibbonWrap">
+      <!-- УРОВЕНЬ 3 -->
+      <div class="category-ribbon-wrap">
         <div class="category-ribbon" id="categoryRibbon"></div>
-        <button type="button" class="category-collapse-btn" id="categoryCollapseBtn" aria-expanded="true" aria-label="Свернуть категории" onclick="toggleCategoryRibbon()"><span id="categoryCollapseIcon">⌃</span></button>
       </div>
 
-      <!-- УРОВЕНЬ 4: Вкус, Острота и Смена вида (Карточки / Сетка) в правой части -->
+      <!-- УРОВЕНЬ 4 -->
       <div class="filters-row" id="filtersRow">
         <div class="filters-left">
           <div class="taste-dropdown-wrapper" id="tasteDropdownWrapper">
@@ -512,10 +509,9 @@
           </select>
         </div>
 
-        <!-- Переключатель вида: карточки или полноценная таблица -->
         <div class="view-mode-group">
-          <button type="button" class="view-mode-btn active" id="viewModeCards" onclick="setViewMode('cards')" title="Карточки товаров">Карточки</button>
-          <button type="button" class="view-mode-btn" id="viewModeTable" onclick="setViewMode('table')" title="Табличный список товаров">Таблица</button>
+          <button type="button" class="view-mode-btn active" id="viewModeCards" onclick="setViewMode('cards')" title="Крупные карточки">Карточки</button>
+          <button type="button" class="view-mode-btn" id="viewModeGrid" onclick="setViewMode('table')" title="Табличный вид">Таблица</button>
         </div>
       </div>
 
@@ -532,7 +528,7 @@
     </div>
   </header>
 
-  <!-- СЕТКА КАТАЛОГА (по умолчанию режим mode-cards) -->
+  <!-- КАТАЛОГ -->
   <main class="catalog-view mode-cards" id="catalogView">
     <div class="loader">Загружаем меню СамаРамён...</div>
   </main>
@@ -545,7 +541,7 @@
       </div>
 
       <div class="detail-right-col">
-        <div id="detailTitleBlock">
+        <div>
           <div class="detail-cat" id="detailCat"></div>
           <h1 class="detail-title" id="detailTitle"></h1>
           <div class="detail-price-row">
@@ -580,21 +576,23 @@
           </div>
         </div>
 
-        <div class="add-to-cart-bar" id="detailAddBarPrimary">
-          <button class="add-main-btn" id="detailAddBtn" onclick="addCurrentDetailToCart()">Добавить в корзину</button>
+        <div class="add-to-cart-bar">
+          <button class="add-main-btn" id="detailAddBtn" onclick="addCurrentDetailToCart()">
+            Добавить в корзину
+          </button>
         </div>
 
-        <div class="tags-row" id="detailTagsRow">
+        <div class="tags-row">
           <div class="tag-box"><div class="tag-box-label">Вкус</div><div class="tag-box-val" id="detailTaste">Не указан</div></div>
           <div class="tag-box"><div class="tag-box-label">Острота</div><div class="tag-box-val" id="detailSpiciness">0 / 5</div></div>
         </div>
 
-        <div id="detailDescriptionBlock">
+        <div>
           <div class="section-title">Описание</div>
           <p class="desc-text" id="detailDesc"></p>
         </div>
 
-        <div id="detailKbjuBlock">
+        <div>
           <div class="section-title">Пищевая ценность (на 100 г / порцию)</div>
           <div class="kbju-grid">
             <div class="kbju-card"><div class="kbju-label">Ккал</div><div class="kbju-val" id="detailKcal">—</div></div>
@@ -604,11 +602,10 @@
           </div>
         </div>
 
-        <div id="detailCompSection" class="detail-comp-section">
+        <div id="detailCompSection">
           <div class="section-title">Состав</div>
           <p class="comp-text" id="detailComp"></p>
         </div>
-        <div class="add-to-cart-bar detail-add-secondary" id="detailAddBarSecondary"><button class="add-main-btn" id="detailAddBtnSecondary" onclick="addCurrentDetailToCart()">Добавить в корзину</button></div>
       </div>
 
       <div class="declaration-box" id="detailDeclSection">
@@ -616,6 +613,47 @@
       </div>
     </div>
   </section>
+
+  <!-- ПОДВАЛ САЙТА С РЕКВИЗИТАМИ ИП И ЮРИДИЧЕСКОЙ ИНФОРМАЦИЕЙ ДЛЯ БАНКА ТОЧКА -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-col-title">Реквизиты компании</div>
+        <div><strong>Индивидуальный предприниматель Цой Александр Юрьевич</strong></div>
+        <div>ИНН: 631606527603 <span id="footerOgrnip"></span></div>
+        <div id="footerLegalAddress">Россия, г. Самара</div>
+        <div>Телефон: <a id="footerPhoneLink" href="tel:" style="color:inherit;font-weight:700;"></a></div>
+        <div style="margin-top:6px; font-size:11px;">
+          Р/с: 4080 2810 8200 0096 3970 в ООО «Банк Точка»<br>
+          БИК: 044 525 104 | К/с: 3010 1810 7453 7452 5104
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Оплата и доставка</div>
+        <div>Доставка по г. Самара курьерской службой (базовая стоимость — <span id="footerDeliveryCost">300</span> ₽, для предзаказов рассчитывается индивидуально).</div>
+        <div>Принимаем к оплате банковские карты и переводы по QR-коду:</div>
+        <div class="pay-systems-badges">
+          <span class="pay-badge">МИР</span>
+          <span class="pay-badge">VISA</span>
+          <span class="pay-badge">MasterCard</span>
+          <span class="pay-badge">СБП</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Покупателям и документы</div>
+        <ul class="footer-links-list">
+          <li><span class="footer-link" onclick="openLegalModal('oferta')">📄 Публичная оферта</span></li>
+          <li><span class="footer-link" onclick="openLegalModal('payment_delivery')">💳 Способы оплаты, доставки и правила возврата</span></li>
+          <li><span class="footer-link" onclick="openLegalModal('privacy')">🔒 Политика конфиденциальности и обработка персональных данных</span></li>
+        </ul>
+        <div style="margin-top:8px; font-size:11px;">
+          © СамаРамён. Все цены на сайте указаны в рублях РФ.
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <!-- ПЛАВАЮЩАЯ КНОПКА КОРЗИНЫ -->
   <div class="floating-cart" id="floatingCart" onclick="openCartModal()">
@@ -694,6 +732,13 @@
             <input type="email" id="inpEmail" class="form-input" placeholder="mail@example.com">
           </div>
 
+          <label class="consent-checkbox-row">
+            <input type="checkbox" id="chkPersonalDataConsent" checked required>
+            <span>
+              Отправляя заявку, я соглашаюсь с <a onclick="event.preventDefault(); openLegalModal('privacy')">политикой конфиденциальности</a>, даю согласие на обработку персональных данных и принимаю условия <a onclick="event.preventDefault(); openLegalModal('oferta')">публичной оферты</a>.
+            </span>
+          </label>
+
           <button type="submit" class="add-main-btn" id="submitOrderBtn">Оформить выбранное</button>
         </form>
       </div>
@@ -768,7 +813,7 @@
       </a>
       <div style="margin-top: 16px; padding: 12px; background: #F8F9FA; border-radius: 10px;">
         <div style="font-size: 12px; color: var(--text-muted);">Сумма к оплате:</div>
-        <button type="button" class="copy-amount" id="sbpExactAmount" title="Нажмите, чтобы скопировать сумму" onclick="copyAmountFromElement(this)">0 ₽</button>
+        <div style="font-size: 26px; font-weight: 800; color: #137333; margin-top: 2px;" id="sbpExactAmount">0 ₽</div>
       </div>
     </div>
   </div>
@@ -785,7 +830,7 @@
       </p>
       <div style="padding: 12px; background: #E8F0FE; border-radius: 10px; text-align: center; margin-bottom: 12px;">
         <div style="font-size: 12px; color: #1557B0;">Сумма к оплате картой:</div>
-        <button type="button" class="copy-amount" id="cardExactAmount" title="Нажмите, чтобы скопировать сумму" onclick="copyAmountFromElement(this)">0 ₽</button>
+        <div style="font-size: 26px; font-weight: 800; color: #174EA6;" id="cardExactAmount">0 ₽</div>
       </div>
       <div class="delivery-note" style="margin-bottom: 16px;">
         📌 На странице оплаты укажите в комментарии ваш <strong>телефон и номер заказа (<span id="cardOrderNumHint"></span>)</strong>.
@@ -796,36 +841,32 @@
     </div>
   </div>
 
-  <div class="modal-overlay utility-modal" id="noticeModal" role="dialog" aria-modal="true" aria-labelledby="noticeModalTitle">
-    <div class="modal-box">
-      <div class="utility-modal-icon" id="noticeModalIcon">i</div>
-      <div class="modal-title" id="noticeModalTitle" style="margin-bottom:10px;">Уведомление</div>
-      <div class="utility-modal-message" id="noticeModalMessage"></div>
-      <div class="utility-modal-actions"><button type="button" class="add-main-btn" id="noticeModalOk">Понятно</button></div>
+  <!-- МОДАЛЬНОЕ ОКНО ЮРИДИЧЕСКИХ ДОКУМЕНТОВ (ОФЕРТА, ОПЛАТА/ВОЗВРАТ, ПОЛИТИКА 152-ФЗ) -->
+  <div class="modal-overlay" id="legalModal">
+    <div class="modal-box" style="max-width: 680px;">
+      <div class="modal-header">
+        <div class="modal-title" id="legalModalTitle">Документ</div>
+        <button class="modal-close" onclick="document.getElementById('legalModal').classList.remove('open')">✕</button>
+      </div>
+      <div id="legalModalBody" class="legal-doc-content"></div>
     </div>
   </div>
-  <div class="modal-overlay utility-modal" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
-    <div class="modal-box">
-      <div class="utility-modal-icon">?</div>
-      <div class="modal-title" id="confirmModalTitle" style="margin-bottom:10px;">Подтвердите действие</div>
-      <div class="utility-modal-message" id="confirmModalMessage"></div>
-      <div class="utility-modal-actions"><button type="button" class="btn" id="confirmModalCancel">Отмена</button><button type="button" class="add-main-btn" id="confirmModalOk">Подтвердить</button></div>
-    </div>
-  </div>
-  <div class="site-toast" id="siteToast" role="status" aria-live="polite"></div>
 
   <script>
     const CONFIG = {
       API_URL: 'https://script.google.com/macros/s/AKfycbzVdNIzk03VhsBJawl0NC5ANRRoWNl8NhhvWjOqWwxv19m4__RIvcnV7H04cYIPFayO/exec',
-      FEEDBACK_PHONE: '+7 (999) 000-00-00',
+      FEEDBACK_PHONE: '+7 (987) 150-20-77',
       LOGO_URL: 'logo.png',
-      SBP_PAYMENT_LINK: '#',
+      SBP_PAYMENT_LINK: 'https://qr.nspk.ru/AS1A000FPJ4GO4T39MGPBERL583GT4T9',
       SBP_QR_IMAGE_URL: 'sbp-qr.png',
-      TIPS_SERVICE_URL: '#',
+      TIPS_SERVICE_URL: 'https://pay.cloudtips.ru/p/a9c064d0',
       DELIVERY_COST: 300,
       COOKING_FEE: 150,
       TELEGRAM_BOT_LINK: 'https://t.me/samaramen_bot',
-      MODIFIER_CATEGORIES: ['Лапша', 'Рисовые клёцки']
+      MODIFIER_CATEGORIES: ['Лапша', 'Рисовые клёцки'],
+      // Юридические параметры (можно также задать на листе "Настройки"):
+      OGRNIP: '325632700147778',
+      LEGAL_ADDRESS: 'Россия, г. Самара, ул. Средне-Садовая, д. 16, кв. 61'
     };
 
     const TOPPING_KEYWORD_RULES = [
@@ -847,7 +888,7 @@
     ];
 
     const TASTE_LIST = ['Курица', 'Свинина', 'Грибы', 'Вегги', 'Карбонара', 'Морепродукты'];
-    const placeholderImg = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="#f1f3f4"/><circle cx="150" cy="100" r="25" fill="none" stroke="#c7cbd1" stroke-width="3"/><path d="M132 98h36M138 108h24" stroke="#c7cbd1" stroke-width="3" stroke-linecap="round"/></svg>');
+    const placeholderImg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect fill="%23f0f0f0" width="300" height="200"/><text fill="%23999999" font-family="sans-serif" font-size="14" font-weight="bold" x="50%" y="50%" text-anchor="middle">СамаРамён</text></svg>';
 
     let allProducts = [];
     let allToppings = [];
@@ -858,7 +899,7 @@
     let isDetailMode = false;
     let isPreorderMode = false;
 
-    let currentViewMode = 'cards'; // 'cards' (карточки) или 'table' (таблица)
+    let currentViewMode = 'cards';
 
     let currentDishFormat = 'cooked';
     let currentSelectedToppings = new Set();
@@ -873,8 +914,6 @@
 
       const logoEl = document.getElementById('brandLogo');
       if (logoEl && CONFIG.LOGO_URL) logoEl.src = CONFIG.LOGO_URL;
-      const faviconEl = document.getElementById('siteFavicon');
-      if (faviconEl && CONFIG.LOGO_URL) faviconEl.href = CONFIG.LOGO_URL;
 
       const cleanTel = String(CONFIG.FEEDBACK_PHONE || '').replace(/[^\d+]/g, '');
       const headerPhoneBtn = document.getElementById('headerPhoneBtn');
@@ -887,6 +926,23 @@
         successPhoneEl.href = `tel:${cleanTel}`;
         successPhoneEl.textContent = CONFIG.FEEDBACK_PHONE;
       }
+      const footerPhoneEl = document.getElementById('footerPhoneLink');
+      if (footerPhoneEl) {
+        footerPhoneEl.href = `tel:${cleanTel}`;
+        footerPhoneEl.textContent = CONFIG.FEEDBACK_PHONE;
+      }
+      const footerDelivEl = document.getElementById('footerDeliveryCost');
+      if (footerDelivEl) footerDelivEl.textContent = CONFIG.DELIVERY_COST;
+
+      const footerOgrnipEl = document.getElementById('footerOgrnip');
+      if (footerOgrnipEl) {
+        footerOgrnipEl.textContent = CONFIG.OGRNIP ? `| ОГРНИП: ${CONFIG.OGRNIP}` : '';
+      }
+      const footerAddrEl = document.getElementById('footerLegalAddress');
+      if (footerAddrEl && CONFIG.LEGAL_ADDRESS) {
+        footerAddrEl.textContent = `Адрес: ${CONFIG.LEGAL_ADDRESS}`;
+      }
+
       const botBtn = document.getElementById('successBotLinkBtn');
       if (botBtn && CONFIG.TELEGRAM_BOT_LINK) botBtn.href = CONFIG.TELEGRAM_BOT_LINK;
 
@@ -894,42 +950,99 @@
       if (cookedTag) cookedTag.textContent = `+${CONFIG.COOKING_FEE} ₽`;
     }
 
-    function toggleCategoryRibbon() {
-      const wrap = document.getElementById('categoryRibbonWrap');
-      const btn = document.getElementById('categoryCollapseBtn');
-      const icon = document.getElementById('categoryCollapseIcon');
-      const expanded = wrap.classList.toggle('expanded');
-      btn.setAttribute('aria-expanded', String(expanded));
-      btn.setAttribute('aria-label', expanded ? 'Свернуть категории в одну строку' : 'Развернуть категории в несколько строк');
-      icon.textContent = expanded ? '⌃' : '⌄';
-      localStorage.setItem('samaramen_categories_expanded', expanded ? '1' : '0');
+    // Модальные окна с юридической информацией для интернет-эквайринга
+    function openLegalModal(docType) {
+      const titleEl = document.getElementById('legalModalTitle');
+      const bodyEl = document.getElementById('legalModalBody');
+      const ogrnipPart = CONFIG.OGRNIP ? `, ОГРНИП ${CONFIG.OGRNIP}` : '';
+
+      if (docType === 'oferta') {
+        titleEl.textContent = 'Публичная оферта';
+        bodyEl.innerHTML = `
+          <p>Настоящий документ является официальным публичным предложением (офертой) <strong>Индивидуального предпринимателя Цоя Александра Юрьевича</strong> (ИНН 631606527603${ogrnipPart}), именуемого в дальнейшем «Продавец», заключить договор розничной купли-продажи и доставки товаров/блюд дистанционным способом с любым физическим или юридическим лицом («Покупатель»).</p>
+          <h4>1. Предмет договора и цены</h4>
+          <p>1.1. Продавец обязуется передать в собственность Покупателя выбранные на сайте «СамаРамён» блюда и продовольственные/непродовольственные товары, а Покупатель обязуется принять и оплатить их по ценам, указанным на сайте в рублях РФ.</p>
+          <p>1.2. Полная информация о каждом товаре (вес, состав, пищевая ценность, описание, декларация соответствия) размещена в карточке соответствующего товара в каталоге сайта.</p>
+          <h4>2. Оформление заказа и предзаказа</h4>
+          <p>2.1. Заказ оформляется Покупателем самостоятельно через корзину на сайте путём указания контактного номера телефона и адреса доставки.</p>
+          <p>2.2. Позиции из раздела «Предзаказ» оформляются без предварительной оплаты; сроки поставки и возможность выполнения предзаказа согласовываются Продавцом с Покупателем по телефону или в мессенджере.</p>
+          <h4>3. Оплата, доставка и возврат</h4>
+          <p>3.1. Доставка заказов осуществляется по г. Самара курьерской службой. Базовая стоимость доставки товаров из наличия составляет ${CONFIG.DELIVERY_COST} рублей и может уточняться при подтверждении заказа в зависимости от тарифа курьерской службы до адреса Покупателя.</p>
+          <p>3.2. Возврат товаров и денежных средств осуществляется в соответствии с Законом РФ «О защите прав потребителей» № 2300-1.</p>
+          <h4>4. Реквизиты Продавца</h4>
+          <p>
+            <strong>Наименование:</strong> Индивидуальный предприниматель Цой Александр Юрьевич<br>
+            <strong>ИНН:</strong> 631606527603 ${ogrnipPart}<br>
+            <strong>Адрес:</strong> ${CONFIG.LEGAL_ADDRESS}<br>
+            <strong>Телефон:</strong> ${CONFIG.FEEDBACK_PHONE}<br>
+            <strong>Расчётный счёт:</strong> 4080 2810 8200 0096 3970 в ООО «Банк Точка»<br>
+            <strong>БИК:</strong> 044 525 104<br>
+            <strong>Корреспондентский счёт:</strong> 3010 1810 7453 7452 5104
+          </p>
+        `;
+      } else if (docType === 'payment_delivery') {
+        titleEl.textContent = 'Оплата, доставка и возврат';
+        bodyEl.innerHTML = `
+          <h4>1. Способы оплаты и безопасность платежей</h4>
+          <p>Принимаем к оплате карты платёжных систем <strong>VISA, MasterCard, МИР</strong>, а также быстрые платежи через <strong>СБП (Систему быстрых платежей)</strong> по QR-коду.</p>
+          <p>Чтобы оплатить товар банковской картой, выберите этот способ оплаты при оформлении заказа. Далее перейдите на платёжную страницу банка и введите данные вашей банковской карты:</p>
+          <ol>
+            <li>номер карты;</li>
+            <li>срок действия;</li>
+            <li>трёхзначный CVC2/CVV2 код (указан на оборотной стороне).</li>
+          </ol>
+          <p>Если ваша карта подключена к услуге 3D-Secure, вы будете автоматически переадресованы на страницу банка, который выпустил карту, для аутентификации.</p>
+          <p>Интернет-платежи обрабатываются через безопасный шлюз банка согласно международному сертификату безопасности <strong>PCI DSS</strong>. Информация шифруется по технологии <strong>SSL</strong> и недоступна посторонним лицам.</p>
+
+          <h4>2. Способы, география и стоимость доставки</h4>
+          <p>География доставки: <strong>г. Самара</strong> (и прилегающие районы по согласованию с оператором). Способ получения: курьерская доставка до адреса Покупателя или самовывоз.</p>
+          <p>Базовая стоимость доставки товаров из наличия составляет <strong>${CONFIG.DELIVERY_COST} ₽</strong>. При подтверждении заказа стоимость доставки может измениться в зависимости от актуального тарифа курьерской службы до вашего адреса. Для товаров из категории «Предзаказ» сроки и стоимость доставки уточняются оператором при подтверждении.</p>
+
+          <h4>3. Правила отмены заказа и возврата товаров / денежных средств</h4>
+          <ol>
+            <li>Отменить заказ на сайте можно самостоятельно в разделе «Мои заказы» до момента его оплаты, либо по телефону <strong>${CONFIG.FEEDBACK_PHONE}</strong>.</li>
+            <li>В соответствии с Законом «О защите прав потребителей» можно отказаться от непродовольственного товара надлежащего качества и вернуть его в течение 14 дней при сохранении товарного вида, потребительских свойств и наличии чека. Некоторые категории товаров (включая продовольственные товары надлежащего качества, косметику и предметы личной гигиены) возврату и обмену не подлежат согласно Постановлению Правительства РФ № 2463.</li>
+            <li>В случае обнаружения недостатков товара или ненадлежащего качества блюда мы бесплатно заменим товар, устраним недостатки или полностью вернём стоимость товара.</li>
+            <li>Деньги за заказ вернём не позже чем через 10 дней со дня предъявления требования. При оплате банковской картой возврат денежных средств производится на ту же карту, с которой был совершён платёж, в срок от 1 до 30 рабочих дней в зависимости от банка-эмитента.</li>
+          </ol>
+        `;
+      } else if (docType === 'privacy') {
+        titleEl.textContent = 'Политика конфиденциальности (152-ФЗ)';
+        bodyEl.innerHTML = `
+          <p>Настоящая Политика конфиденциальности и обработки персональных данных разработана в соответствии с Федеральным законом РФ № 152-ФЗ «О персональных данных» и действует в отношении всей информации, которую сайт «СамаРамён» (Оператор: <strong>ИП Цой Александр Юрьевич, ИНН 631606527603</strong>) может получить о Пользователе.</p>
+          <h4>1. Какие персональные данные мы собираем</h4>
+          <ul>
+            <li>контактный номер телефона;</li>
+            <li>почтовый адрес (адрес доставки заказа);</li>
+            <li>адрес электронной почты (для направления кассового чека и уведомлений о статусе заказа);</li>
+            <li>ссылки или идентификаторы в мессенджерах (по желанию Пользователя для получения уведомлений о заказе);</li>
+            <li>список заказанных товаров и услуг;</li>
+            <li>технические данные, автоматически передаваемые устройством (IP-адрес, файлы cookies, параметры браузера).</li>
+          </ul>
+          <h4>2. Цели обработки персональных данных</h4>
+          <p>Оператор обрабатывает персональные данные исключительно в целях оформления, подтверждения, оплаты и курьерской доставки заказов Пользователя, направления кассовых чеков и информирования о статусе выполнения заказа.</p>
+          <h4>3. Использование файлов cookies</h4>
+          <p>На сайте используются файлы cookies и локальное хранилище браузера (localStorage) для сохранения состава корзины Пользователя и удобства заполнения формы заказа.</p>
+          <h4>4. Защита данных и права Пользователя</h4>
+          <p>Оператор принимает необходимые организационные и технические меры для защиты персональных данных от неправомерного доступа. Пользователь вправе в любой момент отозвать согласие на обработку персональных данных, обратившись по телефону <strong>${CONFIG.FEEDBACK_PHONE}</strong>.</p>
+        `;
+      }
+
+      document.getElementById('legalModal').classList.add('open');
     }
 
-    // Управление переключением вида: карточки / таблица
     function setViewMode(mode) {
-      currentViewMode = mode === 'table' ? 'table' : 'cards';
-      document.getElementById('viewModeCards').classList.toggle('active', currentViewMode === 'cards');
-      document.getElementById('viewModeTable').classList.toggle('active', currentViewMode === 'table');
+      currentViewMode = mode;
+      document.getElementById('viewModeCards').classList.toggle('active', mode === 'cards');
+      document.getElementById('viewModeGrid').classList.toggle('active', mode === 'table');
 
       const catalogView = document.getElementById('catalogView');
-      catalogView.className = 'catalog-view ' + (currentViewMode === 'table' ? 'mode-table' : 'mode-cards');
-      catalogView.style.display = currentViewMode === 'table' ? 'block' : '';
-      catalogView.style.gridTemplateColumns = '';
-      localStorage.setItem('samaramen_view_mode', currentViewMode);
+      catalogView.className = 'catalog-view ' + (mode === 'table' ? 'mode-table' : 'mode-cards');
+      localStorage.setItem('samaramen_view_mode', mode);
       if (!isDetailMode) renderCatalog();
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('samaramen_categories_expanded') === '1') {
-        const wrap = document.getElementById('categoryRibbonWrap');
-        const btn = document.getElementById('categoryCollapseBtn');
-        const icon = document.getElementById('categoryCollapseIcon');
-        wrap.classList.add('expanded');
-        btn.setAttribute('aria-expanded', 'true');
-        btn.setAttribute('aria-label', 'Свернуть категории в одну строку');
-        icon.textContent = '⌃';
-      }
-      if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./service-worker.js').catch(() => {});
       const savedMode = localStorage.getItem('samaramen_view_mode');
       if (savedMode === 'table') setViewMode('table');
 
@@ -1212,23 +1325,6 @@
         return;
       }
 
-      if (currentViewMode === 'table') {
-        const rows = filteredProducts.map((item, index) => {
-          const photoUrl = item.photo || placeholderImg;
-          const hasMods = CONFIG.MODIFIER_CATEGORIES.includes(item.category);
-          return `<tr onclick="openDetail(${index})">
-            <td class="table-thumb-cell"><img class="table-thumb" src="${photoUrl}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${placeholderImg}'"></td>
-            <td class="table-category table-category-cell">${item.category || '—'}</td>
-            <td class="table-description"><div class="table-product-name">${item.name || 'Без названия'}</div><div>${item.description || 'Описание отсутствует'}</div></td>
-            <td class="table-weight">${item.weight || '—'}</td>
-            <td><span class="table-price">${item.price} ₽</span></td>
-            <td class="table-add-cell"><button class="card-add-btn ${isPreorderMode ? 'preorder-btn' : ''}" onclick="quickAddFromCard(event, ${index})">${hasMods ? 'Собрать' : (isPreorderMode ? '+ Предзаказ' : '+ В корзину')}</button></td>
-          </tr>`;
-        }).join('');
-        container.innerHTML = `<table class="catalog-table"><thead><tr><th>Фото</th><th>Категория</th><th>Описание</th><th>Вес</th><th>Цена</th><th>В корзину</th></tr></thead><tbody>${rows}</tbody></table>`;
-        return;
-      }
-
       container.innerHTML = filteredProducts.map((item, index) => {
         const photoUrl = item.photo ? item.photo : placeholderImg;
         const spicyBadge = item.spiciness > 0 ? `<div class="badge badge-spicy">🌶️ ${item.spiciness}/5</div>` : '';
@@ -1236,23 +1332,57 @@
         const preorderBadge = isPreorderMode ? `<div class="badge badge-preorder">Предзаказ</div>` : '';
         const hasMods = CONFIG.MODIFIER_CATEGORIES.includes(item.category);
 
-        return `
-          <div class="card" onclick="openDetail(${index})">
-            <div class="card-photo-wrapper">
-              <img class="card-photo" src="${photoUrl}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src='${placeholderImg}'">
-              ${tasteBadge}
-              ${spicyBadge}
-              ${preorderBadge}
-            </div>
-            <div class="card-body">
-              <div class="card-category">${item.category}</div>
-              <div class="card-title">${item.name}</div>
-              <div class="card-footer">
-                <div><div class="card-price">${item.price} ₽</div><div class="card-weight">${item.weight || ''}</div></div>
-                <button class="card-add-btn ${isPreorderMode ? 'preorder-btn' : ''}" onclick="quickAddFromCard(event, ${index})">${hasMods ? 'Собрать' : (isPreorderMode ? '+ Предзаказ' : '+ В корзину')}</button>
+        if (currentViewMode === 'table') {
+          return `
+            <div class="card" onclick="openDetail(${index})">
+              <div class="card-photo-wrapper">
+                <img class="card-photo" src="${photoUrl}" alt="${item.name}" loading="lazy" onerror="this.src='${placeholderImg}'">
+                ${tasteBadge}
+              </div>
+              <div class="card-body">
+                <div class="card-info-main">
+                  <div class="card-category">${item.category}</div>
+                  <div class="card-title">${item.name}</div>
+                  <div class="card-meta-row">
+                    <span>${item.taste || 'Классический'}</span>
+                    <span>•</span>
+                    <span>${item.weight || ''}</span>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="card-price">${item.price} ₽</div>
+                  <button class="card-add-btn ${isPreorderMode ? 'preorder-btn' : ''}" onclick="quickAddFromCard(event, ${index})">
+                    ${hasMods ? 'Собрать' : '+ В корзину'}
+                  </button>
+                </div>
               </div>
             </div>
-          </div>`;
+          `;
+        } else {
+          return `
+            <div class="card" onclick="openDetail(${index})">
+              <div class="card-photo-wrapper">
+                <img class="card-photo" src="${photoUrl}" alt="${item.name}" loading="lazy" onerror="this.src='${placeholderImg}'">
+                ${tasteBadge}
+                ${spicyBadge}
+                ${preorderBadge}
+              </div>
+              <div class="card-body">
+                <div class="card-category">${item.category}</div>
+                <div class="card-title">${item.name}</div>
+                <div class="card-footer">
+                  <div>
+                    <div class="card-price">${item.price} ₽</div>
+                    <div class="card-weight">${item.weight || ''}</div>
+                  </div>
+                  <button class="card-add-btn ${isPreorderMode ? 'preorder-btn' : ''}" onclick="quickAddFromCard(event, ${index})">
+                    ${hasMods ? 'Собрать' : (isPreorderMode ? '+ Предзаказ' : '+ В корзину')}
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        }
       }).join('');
     }
 
@@ -1285,7 +1415,7 @@
       document.getElementById('detailView').style.display = 'none';
       document.getElementById('detailNavPanel').style.display = 'none';
       document.getElementById('filtersRow').style.display = 'flex';
-      document.getElementById('catalogView').style.display = currentViewMode === 'table' ? 'block' : 'grid';
+      document.getElementById('catalogView').style.display = currentViewMode === 'table' ? 'flex' : 'grid';
       renderCatalog();
     }
 
@@ -1311,32 +1441,6 @@
       updateNavControls();
       currentDishFormat = 'cooked';
       currentSelectedToppings.clear();
-      const hasModifiers = CONFIG.MODIFIER_CATEGORIES.includes(item.category);
-      const detailCard = document.querySelector('.detail-card');
-      detailCard.classList.toggle('has-modifiers', hasModifiers);
-      const rightCol = document.querySelector('.detail-right-col');
-      const compSection = document.getElementById('detailCompSection');
-      const declSection = document.getElementById('detailDeclSection');
-      const primaryAddBar = document.getElementById('detailAddBarPrimary');
-      const tagsRow = document.getElementById('detailTagsRow');
-      const descriptionBlock = document.getElementById('detailDescriptionBlock');
-      const kbjuBlock = document.getElementById('detailKbjuBlock');
-      const modifiersBox = document.getElementById('modifiersBox');
-      const secondaryAddBar = document.getElementById('detailAddBarSecondary');
-      // Composition and declaration stay under the product photo on desktop.
-      if (compSection.parentElement !== detailCard) detailCard.insertBefore(compSection, declSection);
-      if (declSection.parentElement !== detailCard) detailCard.appendChild(declSection);
-      // Keep all right-column sections in the intended reading order. Both add buttons
-      // call the same handler and share the same selected format/toppings state.
-      rightCol.appendChild(document.getElementById('detailTitleBlock'));
-      rightCol.appendChild(primaryAddBar);
-      rightCol.appendChild(tagsRow);
-      rightCol.appendChild(descriptionBlock);
-      rightCol.appendChild(kbjuBlock);
-      rightCol.appendChild(modifiersBox);
-      rightCol.appendChild(secondaryAddBar);
-      document.getElementById('detailAddBarSecondary').style.display = hasModifiers ? 'flex' : 'none';
-      document.getElementById('detailAddBtnSecondary').className = 'add-main-btn ' + (isPreorderMode ? 'preorder-mode-btn' : '');
 
       document.getElementById('detailImg').src = item.photo ? item.photo : placeholderImg;
       document.getElementById('detailCat').textContent = item.category + (isPreorderMode ? ' (Предзаказ)' : '');
@@ -1362,7 +1466,6 @@
       const addBtn = document.getElementById('detailAddBtn');
       if (isPreorderMode) addBtn.className = 'add-main-btn preorder-mode-btn';
       else addBtn.className = 'add-main-btn';
-      document.getElementById('detailAddBtnSecondary').className = addBtn.className;
 
       const modBox = document.getElementById('modifiersBox');
       if (CONFIG.MODIFIER_CATEGORIES.includes(item.category)) {
@@ -1452,10 +1555,7 @@
       }
 
       const prefix = isPreorderMode ? 'В предзаказ' : 'В корзину';
-      const label = `${prefix} — ${price} ₽`;
-      document.getElementById('detailAddBtn').textContent = label;
-      const secondary = document.getElementById('detailAddBtnSecondary');
-      if (secondary) { secondary.textContent = label; secondary.className = 'add-main-btn ' + (isPreorderMode ? 'preorder-mode-btn' : ''); }
+      document.getElementById('detailAddBtn').textContent = `${prefix} — ${price} ₽`;
     }
 
     function addCurrentDetailToCart() {
@@ -1629,7 +1729,7 @@
       upsellSection.style.display = 'block';
       ribbon.innerHTML = upsellItems.map(item => `
         <div class="upsell-card">
-          <img class="upsell-img" src="${item.photo || placeholderImg}" alt="${item.name}" onerror="this.onerror=null;this.src='${placeholderImg}'">
+          <img class="upsell-img" src="${item.photo || placeholderImg}" alt="${item.name}" onerror="this.src='${placeholderImg}'">
           <div class="upsell-name">${item.name}</div>
           <div style="font-size:12px; font-weight:800;">${item.price} ₽</div>
           <button type="button" class="upsell-btn" onclick="addUpsellItem(${item.id})">+ Добавить</button>
@@ -1727,7 +1827,7 @@
             </div>
             ${!isPre ? `
               <div style="display:flex; gap:8px; margin-bottom:8px;">
-                <button type="button" class="pay-btn-sbp" style="padding:10px; font-size:14px;" onclick="openPaymentModalForOrder('${o.orderId}', ${o.totalWithDelivery},${o.totalCard})">
+                <button type="button" class="pay-btn-sbp" style="padding:10px; font-size:14px;" onclick="openPaymentModalForOrder('${o.orderId}', ${o.totalWithDelivery}, ${o.totalCard})">
                   💳 Оплатить заказ (${o.totalWithDelivery} ₽)
                 </button>
               </div>
@@ -1740,49 +1840,8 @@
       }).join('');
     }
 
-    async function copyToClipboard(text) {
-      try { await navigator.clipboard.writeText(String(text)); showToast('Скопировано: ' + text); }
-      catch (e) { showToast('Не удалось скопировать. Выделите текст и скопируйте вручную.', 'error'); }
-    }
-
-    function copyAmountFromElement(el) { copyToClipboard((el.textContent || '').trim()); }
-
-    function showToast(message, type = 'success') {
-      const toast = document.getElementById('siteToast');
-      if (!toast) return;
-      toast.textContent = message;
-      toast.className = 'site-toast show ' + type;
-      clearTimeout(window.__siteToastTimer);
-      window.__siteToastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
-    }
-
-    function showNoticeModal(title, message, type = 'info') {
-      return new Promise(resolve => {
-        const overlay = document.getElementById('noticeModal');
-        document.getElementById('noticeModalTitle').textContent = title;
-        document.getElementById('noticeModalMessage').textContent = message;
-        document.getElementById('noticeModalIcon').textContent = type === 'error' ? '!' : (type === 'success' ? '✓' : 'i');
-        document.getElementById('noticeModalOk').onclick = () => { overlay.classList.remove('open'); resolve(true); };
-        overlay.classList.add('open');
-      });
-    }
-
-    function showConfirmModal(title, message) {
-      return new Promise(resolve => {
-        const overlay = document.getElementById('confirmModal');
-        document.getElementById('confirmModalTitle').textContent = title;
-        document.getElementById('confirmModalMessage').textContent = message;
-        const finish = value => { overlay.classList.remove('open'); resolve(value); };
-        document.getElementById('confirmModalCancel').onclick = () => finish(false);
-        document.getElementById('confirmModalOk').onclick = () => finish(true);
-        overlay.classList.add('open');
-      });
-    }
-
-    function updateReceiptFileName(input) {
-      const name = input.files && input.files[0] ? input.files[0].name : 'Файл не выбран';
-      const label = document.getElementById('receiptFileName');
-      if (label) label.textContent = name;
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => { alert('Скопировано в буфер обмена: ' + text); });
     }
 
     function openPaymentModalForOrder(orderId, sbpSum, cardSum) {
@@ -1798,29 +1857,13 @@
           <div class="receipt-upload-box">
             <div style="font-size:14px; font-weight:800; margin-bottom:6px;">🧾 Загрузить чек об оплате</div>
             <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Прикрепите скриншот/PDF чека или вставьте ссылку:</p>
-            <label class="receipt-dropzone" id="receiptDropzone" for="custReceiptFile">
-              <span class="receipt-upload-icon">⇧</span>
-              <strong>Загрузить чек или перетащить файл сюда</strong>
-              <span class="receipt-file-hint">PNG, JPG или PDF · выберите файл с устройства</span>
-              <span class="receipt-file-name" id="receiptFileName">Файл не выбран</span>
-              <input type="file" id="custReceiptFile" accept="image/*,.pdf,application/pdf" hidden onchange="updateReceiptFileName(this)">
-            </label>
-            <label class="form-label" for="custReceiptLink">Или ссылка на чек</label>
-            <input type="url" id="custReceiptLink" class="form-input" placeholder="https://..." style="margin-bottom:12px;">
+            <input type="file" id="custReceiptFile" accept="image/*,.pdf" style="font-size:12px; margin-bottom:8px; display:block; width:100%;">
+            <input type="text" id="custReceiptLink" class="form-input" placeholder="Или вставьте ссылку на чек" style="margin-bottom:8px;">
             <button type="button" class="add-main-btn" onclick="submitCustomerReceipt('${orderId}')">Отправить чек на проверку</button>
           </div>
         </div>
       `;
       document.getElementById('paymentModal').classList.add('open');
-      const dropzone = document.getElementById('receiptDropzone');
-      if (dropzone) {
-        ['dragenter', 'dragover'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.add('dragover'); }));
-        ['dragleave', 'drop'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove('dragover'); }));
-        dropzone.addEventListener('drop', e => {
-          const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-          if (file) { const input = document.getElementById('custReceiptFile'); const dt = new DataTransfer(); dt.items.add(file); input.files = dt.files; updateReceiptFileName(input); }
-        });
-      }
     }
 
     function openSbpModalCustom(sum) {
@@ -1853,7 +1896,7 @@
         fileObj = { fileName: file.name, mimeType: file.type || 'image/jpeg', base64Data };
       }
 
-      if (!receiptLink && !fileObj) { await showNoticeModal('Нужен чек', 'Выберите файл чека или вставьте ссылку на него.', 'error'); return; }
+      if (!receiptLink && !fileObj) { alert('Пожалуйста, выберите файл чека или вставьте ссылку.'); return; }
 
       const payload = { action: 'uploadPaymentReceipt', orderId: orderId, receiptLink: receiptLink, fileObj: fileObj };
 
@@ -1863,14 +1906,14 @@
         });
         const json = await res.json();
         if (json && json.status === 'ok') {
-          await showNoticeModal('Чек отправлен', 'Чек успешно отправлен на проверку.', 'success');
+          alert('✅ Чек успешно отправлен на проверку!');
           document.getElementById('paymentModal').classList.remove('open');
           closeCartModal();
         } else {
-          await showNoticeModal('Не удалось отправить чек', json.message || 'Не удалось загрузить чек.', 'error');
+          alert('Ошибка: ' + (json.message || 'Не удалось загрузить чек'));
         }
       } catch (e) {
-        await showNoticeModal('Ошибка сети', e.message, 'error');
+        alert('Ошибка сети: ' + e.message);
       }
     }
 
@@ -1925,16 +1968,16 @@
     }
 
     async function cancelCustomerOrder(orderId) {
-      if (!await showConfirmModal('Отменить заказ?', `Вы действительно хотите отменить заказ ${orderId}?`)) return;
+      if (!confirm(`Вы действительно хотите отменить заказ ${orderId}?`)) return;
       try {
         const res = await fetch(CONFIG.API_URL, {
           method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({ action: 'cancelOrder', orderId })
         });
         const json = await res.json();
-        if (json && json.status === 'ok') { await showNoticeModal('Заказ отменён', 'Заказ успешно отменён.', 'success'); performOrderSearch(); }
-        else await showNoticeModal('Не удалось отменить заказ', json.message || 'Не удалось отменить заказ.', 'error');
-      } catch (e) { await showNoticeModal('Ошибка сети', e.message, 'error'); }
+        if (json && json.status === 'ok') { alert('Заказ успешно отменён.'); performOrderSearch(); }
+        else alert(json.message || 'Не удалось отменить заказ');
+      } catch (e) { alert('Ошибка сети: ' + e.message); }
     }
 
     function repeatOrder(items, orderType) {
@@ -1955,7 +1998,7 @@
       updateCartCounters();
       document.getElementById('trackModal').classList.remove('open');
       openCartModal();
-      showToast(`Позиции добавлены в корзину (${isPre ? 'Предзаказ' : 'Наличие'})`);
+      alert(`Позиции добавлены в корзину (${isPre ? 'Предзаказ' : 'Наличие'})!`);
     }
 
     function initEvents() {
